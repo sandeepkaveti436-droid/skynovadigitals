@@ -4,6 +4,7 @@ import "./globals.css";
 import SplashScreen from "@/src/components/SplashScreen";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Sky Nova Digitals",
