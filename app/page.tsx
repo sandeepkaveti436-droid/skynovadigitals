@@ -1,9 +1,12 @@
 import Hero from "@/src/components/Hero";
 import ValueStripSection from "@/src/components/ValueStripSection";
 import FeaturedWork from "@/src/components/FeaturedWork";
-import ProcessSection from "@/src/components/ProcessSection";
+import Services from "@/src/components/Services";
+import WhyChooseUs from "@/src/components/WhyChooseUs";
+import About from "@/src/components/About";
+import Process from "@/src/components/Process";
+import Results from "@/src/components/Results";
 import Testimonials from "@/src/components/Testimonials";
-import CTASection from "@/src/components/CTASection";
 
 export default function Home() {
   return (
@@ -11,9 +14,12 @@ export default function Home() {
       <Hero />
       <ValueStripSection />
       <FeaturedWork />
-      <ProcessSection />
-      <Testimonials />
-      <CTASection />
+      <Services />
+      <WhyChooseUs/>
+      <About />
+      <Process/>
+      <Results />
+      <Testimonials/>
     </div>
   );
 }
