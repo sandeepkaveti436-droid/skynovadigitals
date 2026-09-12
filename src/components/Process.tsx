@@ -45,119 +45,179 @@ export default function Process() {
     target: targetRef,
   });
 
-  // Smooth out the scroll progress for animations
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
   });
 
-  // Transform for horizontal movement
   const x = useTransform(smoothProgress, [0, 1], ["0%", "-75%"]);
 
-  // Logic to highlight labels based on scroll
   const step1Opacity = useTransform(smoothProgress, [0, 0.25], [1, 0.2]);
   const step2Opacity = useTransform(smoothProgress, [0.25, 0.5], [0.2, 1]);
   const step3Opacity = useTransform(smoothProgress, [0.5, 0.75], [0.2, 1]);
   const step4Opacity = useTransform(smoothProgress, [0.75, 1], [0.2, 1]);
 
   return (
-    <section ref={targetRef} className="relative h-[400vh] bg-[#050505]">
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        {/* --- DYNAMIC BACKGROUND TEXT --- */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02]">
-          <h1 className="text-[25vw] font-black uppercase tracking-tighter text-white">
-            SKYNOVA
-          </h1>
-        </div>
+    <>
+      {/* --- DESKTOP VIEW (Horizontal Deck) --- */}
+      <section
+        ref={targetRef}
+        className="hidden md:block relative h-[400vh] bg-white border-t border-gray-100"
+      >
+        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+            <h1 className="text-[25vw] font-black uppercase tracking-tighter text-black">
+              SKYNOVA
+            </h1>
+          </div>
 
-        {/* --- HEADER --- */}
-        <div className="absolute top-12 left-10 md:left-20 z-20">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="absolute top-12 left-20 z-20">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-2 rounded-full bg-[#F2B800] animate-pulse" />
+              <span className="text-[12px] font-black uppercase tracking-[0.5em] text-black/40">
+                Operation: Workflow
+              </span>
+            </div>
+            <h2 className="text-[42px] font-bold tracking-tighter text-black leading-none">
+              A Methodical
+              <br />
+              <span className="text-black/20 italic font-light">Approach.</span>
+            </h2>
+          </div>
+
+          <motion.div style={{ x }} className="flex">
+            {steps.map((step, idx) => (
+              <div
+                key={step.id}
+                className="relative h-screen w-[70vw] flex-shrink-0 flex items-center justify-center px-20"
+              >
+                <div className="relative w-full max-w-5xl aspect-[18/8] bg-[#F9F9F9] border border-black/[0.05] rounded-[40px] p-16 shadow-sm overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#F2B800]/5 blur-[80px] rounded-full" />
+                  <div className="relative z-10 grid grid-cols-12 h-full items-center gap-12">
+                    <div className="col-span-5 flex flex-col items-start gap-8">
+                      <span className="text-[180px] font-black text-black/[0.04] leading-none tracking-tighter">
+                        {step.id}
+                      </span>
+                      <div className="w-24 h-24 p-6 bg-white border border-black/5 rounded-3xl shadow-sm group-hover:scale-110 transition-all duration-700">
+                        {step.icon}
+                      </div>
+                    </div>
+                    <div className="col-span-7 space-y-8">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-black text-[#F2B800] uppercase tracking-[0.4em]">
+                          {step.phase}
+                        </span>
+                        <h3 className="text-[56px] font-bold text-black tracking-tighter leading-none">
+                          {step.title}
+                        </h3>
+                      </div>
+                      <p className="text-gray-500 text-[18px] font-medium leading-relaxed max-w-lg">
+                        {step.desc}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {step.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[12px] font-bold uppercase tracking-widest px-4 py-2 bg-white border border-black/[0.05] rounded-full text-black/50 group-hover:text-black group-hover:border-[#F2B800]/30 transition-all"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          <div className="absolute bottom-12 left-10 right-10 flex flex-col gap-4">
+            <div className="w-full h-[1px] bg-black/10 relative">
+              <motion.div
+                style={{ scaleX: smoothProgress }}
+                className="absolute inset-0 h-full bg-[#F2B800] origin-left shadow-[0_0_15px_rgba(242,184,0,0.4)]"
+              />
+            </div>
+            <div className="flex justify-between items-center text-[10px] font-black text-black uppercase tracking-[0.4em]">
+              <motion.span style={{ opacity: step1Opacity }}>Logic</motion.span>
+              <motion.span style={{ opacity: step2Opacity }}>
+                Visuals
+              </motion.span>
+              <motion.span style={{ opacity: step3Opacity }}>Core</motion.span>
+              <motion.span style={{ opacity: step4Opacity }}>
+                Growth
+              </motion.span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- MOBILE VIEW (Vertical Cards) --- */}
+      {/* Reduced py-20 to py-12 to remove extra space */}
+      <section className="md:hidden bg-white py-12 px-6 border-t border-gray-100 flex flex-col items-center">
+        {/* Centered Header */}
+        <div className="flex flex-col items-center text-center gap-3 mb-4">
+          <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#F2B800] animate-pulse" />
-            <span className="text-[12px] font-black uppercase tracking-[0.5em] text-white/40">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-black/40">
               Operation: Workflow
             </span>
           </div>
-          <h2 className="text-[20px] md:text-[32px] font-bold tracking-tighter text-white leading-none">
-            A Methodical
-            <br />
-            <span className="text-white/20 italic font-light">Approach.</span>
-          </h2>
         </div>
+        <h2 className="text-3xl font-bold tracking-tighter text-black leading-none text-center mb-8">
+          A Methodical
+          <br />
+          <span className="text-black/20 italic font-light">Approach.</span>
+        </h2>
 
-        {/* --- THE DECK (Horizontal Slide) --- */}
-        <motion.div style={{ x }} className="flex">
-          {steps.map((step, idx) => (
-            <div
+        {/* Space between cards reduced to space-y-4 */}
+        <div className="space-y-4 w-full max-w-md">
+          {steps.map((step) => (
+            <motion.div
               key={step.id}
-              className="relative h-screen w-screen md:w-[70vw] flex-shrink-0 flex items-center justify-center px-6 md:px-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              /* Reduced p-8 to p-6 for tighter fit */
+              className="bg-[#F9F9F9] border border-black/[0.05] rounded-[24px] p-6 relative overflow-hidden flex flex-col items-center text-center"
             >
-              <div className="relative w-full max-w-5xl aspect-video md:aspect-[16/8] bg-white/[0.03] border border-white/5 rounded-[40px] p-8 md:p-16 backdrop-blur-3xl overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#F2B800]/5 blur-[80px] rounded-full" />
-                <div className="absolute -bottom-10 -left-10 w-40 h-40 border border-white/5 rounded-full" />
+              {/* Mobile ID Watermark moved slightly for better centering */}
+              <span className="absolute -top-2 -right-2 text-[60px] font-black text-black/[0.03] leading-none">
+                {step.id}
+              </span>
 
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 h-full items-center gap-12">
-                  <div className="md:col-span-5 flex flex-col items-start gap-8">
-                    <span className="text-[120px] md:text-[180px] font-black text-white/5 leading-none tracking-tighter">
-                      {step.id}
-                    </span>
-                    <div className="w-20 h-20 md:w-24 md:h-24 p-6 bg-white/[0.02] border border-white/5 rounded-3xl opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
-                      {step.icon}
-                    </div>
-                  </div>
-
-                  <div className="md:col-span-7 space-y-8">
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-black text-[#F2B800] uppercase tracking-[0.4em]">
-                        {step.phase}
-                      </span>
-                      <h3 className="text-[20px] md:text-[28px] font-bold text-white tracking-tighter leading-none">
-                        {step.title}
-                      </h3>
-                    </div>
-                    <p className="text-white/50 text-[16px] md:text-[16px] font-medium leading-relaxed max-w-lg">
-                      {step.desc}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {step.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[12px] font-medium uppercase tracking-widest px-3 py-1.5 bg-white/5 border border-white/5 rounded-full text-white/40 group-hover:text-white/80 transition-all"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+              <div className="relative z-10 w-full flex flex-col items-center">
+                {/* Centered Icon */}
+                <div className="w-12 h-12 p-3 bg-white border border-black/5 rounded-2xl shadow-sm mb-4 mx-auto">
+                  {step.icon}
                 </div>
-
-                <div className="absolute bottom-8 right-12 hidden md:block">
-                  <p className="text-[8px] font-mono text-white/10 uppercase tracking-widest leading-loose">
-                    // SECURE_SYSTEMS_INITIATED <br />
-                    // 0x{idx}F_NODE_STABLE
-                  </p>
+                
+                <span className="text-[9px] font-black text-[#F2B800] uppercase tracking-[0.4em] block mb-2">
+                  {step.phase}
+                </span>
+                <h3 className="text-xl font-bold text-black mb-3 tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-5">
+                  {step.desc}
+                </p>
+                
+                {/* Centered Tags */}
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {step.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-white border border-black/[0.05] rounded-full text-black/40"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
-
-        {/* --- LASER PROGRESS TRACKER --- */}
-        <div className="absolute bottom-12 left-10 right-10 flex flex-col gap-4">
-          <div className="w-full h-[1px] bg-white/10 relative">
-            <motion.div
-              style={{ scaleX: smoothProgress }}
-              className="absolute inset-0 h-full bg-[#F2B800] origin-left shadow-[0_0_15px_#F2B800]"
-            />
-          </div>
-          <div className="flex justify-between items-center text-[10px] font-black text-white uppercase tracking-[0.4em]">
-            <motion.span style={{ opacity: step1Opacity }}>Logic</motion.span>
-            <motion.span style={{ opacity: step2Opacity }}>Visuals</motion.span>
-            <motion.span style={{ opacity: step3Opacity }}>Core</motion.span>
-            <motion.span style={{ opacity: step4Opacity }}>Growth</motion.span>
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

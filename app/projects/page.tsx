@@ -2,20 +2,18 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-// --- PROJECT DATA ---
+// --- PROJECT DATA (Added more to show the 4-column grid) ---
 const projects = [
   {
     id: 1,
     name: "Longevity Lounge",
     category: "Web Design",
     year: "2024",
-    description:
-      "A premium healthcare portal designed to bridge the gap between complex data and human trust.",
     image:
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053",
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800",
     slug: "longevity-lounge",
   },
   {
@@ -23,10 +21,8 @@ const projects = [
     name: "Omega Ecosystem",
     category: "UI/UX",
     year: "2024",
-    description:
-      "Reimagining hospital management through an intuitive, multi-platform design system.",
     image:
-      "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070",
+      "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=800",
     slug: "omega-ecosystem",
   },
   {
@@ -34,162 +30,140 @@ const projects = [
     name: "Orvixa Intelligence",
     category: "Development",
     year: "2023",
-    description:
-      "Full-stack development of an AI-driven SaaS platform for global business logistics.",
     image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800",
     slug: "orvixa",
   },
   {
     id: 4,
-    name: "Nova Brand Identity",
+    name: "Nova Brand",
     category: "Branding",
     year: "2024",
-    description:
-      "A complete visual overhaul for a modern fintech startup entering the European market.",
     image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800",
     slug: "nova-brand",
-  },
-  {
-    id: 5,
-    name: "Growth Catalyst",
-    category: "Digital Growth",
-    year: "2023",
-    description:
-      "Scale-focused performance marketing and SEO engine for a leading e-commerce brand.",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015",
-    slug: "growth-catalyst",
   },
 ];
 
-const categories = [
-  "All",
-  "Web Design",
-  "UI/UX",
-  "Development",
-  "Branding",
-  "Digital Growth",
-];
+const categories = ["All", "Web Design", "UI/UX", "Development", "Branding"];
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState("All");
-  const brandYellow = "#F2B800";
 
   const filteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <main className="bg-white min-h-screen pt-32 pb-24 px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto">
+    <main className="bg-white min-h-screen pt-32 pb-24 px-6 md:px-12">
+      <div className="max-w-[1440px] mx-auto">
         {/* --- HERO SECTION --- */}
-        <section className="mb-24">
+        <section className="mb-12 flex flex-col items-center md:items-start text-center md:text-left">
           <motion.h1
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="text-6xl md:text-[8vw] font-bold tracking-tighter leading-[0.9] text-black mb-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-[32px] font-bold tracking-tight text-black mb-4"
           >
-            Work that speaks <br />
-            <span className="text-gray-200 italic font-light">for itself.</span>
+            Work that speaks{" "}
+            <span className="text-gray-300 italic font-light">for itself.</span>
           </motion.h1>
+
           <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-500 text-xl md:text-2xl max-w-2xl font-medium leading-tight"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-[24px] text-gray-500 max-w-2xl font-light leading-snug"
           >
-            A selection of digital experiences, products and brands we&apos;ve
-            designed and built for ambitious businesses.
+            A selection of digital experiences designed for ambitious
+            businesses.
           </motion.p>
         </section>
 
-        {/* --- FILTER BAR --- */}
-        <section className="mb-16 overflow-x-auto pb-4 scrollbar-hide">
-          <div className="flex gap-3 min-w-max">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 border ${
-                  filter === cat
-                    ? "bg-black text-white border-black"
-                    : "bg-transparent text-gray-400 border-gray-100 hover:border-black hover:text-black"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </section>
+    {/* --- FILTER BAR --- */}
+<section className="mb-12 md:mb-16 w-full flex justify-center md:justify-start">
+  <div className="flex flex-wrap justify-center md:justify-start gap-3 max-w-full">
+    {categories.map((cat) => (
+      <button
+        key={cat}
+        onClick={() => setFilter(cat)}
+        className={`px-6 py-2.5 rounded-full text-[14px] font-bold uppercase tracking-wider transition-all duration-300 border ${
+          filter === cat
+            ? "bg-black text-white border-black shadow-md"
+            : "bg-gray-50 text-gray-400 border-gray-100 hover:border-black hover:text-black"
+        }`}
+      >
+        {cat}
+      </button>
+    ))}
+  </div>
+</section>
 
-        {/* --- PROJECTS GRID --- */}
-        <section className="grid grid-cols-1 gap-24 lg:gap-32">
+        {/* --- PROJECTS GRID: 4 COLUMNS ON DESKTOP --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
               <motion.div
                 layout
                 key={project.id}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative"
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="group flex flex-col items-center md:items-start text-center md:text-left"
               >
-                {/* Image Container (Large Visual Card) */}
+                {/* Visual Card - Fixed Aspect for 4-col balance */}
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="block relative aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-[32px] bg-gray-100 mb-8"
+                  className="relative w-full aspect-[4/5] overflow-hidden rounded-[20px] bg-gray-100 mb-6 block"
                 >
                   <motion.img
-                    whileHover={{ scale: 1.03 }}
-                    transition={{ duration: 1 }}
+                    whileHover={{ scale: 1.05 }}
                     src={project.image}
                     alt={project.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500"
                   />
-                  {/* Floating Year Tag */}
-                  <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-sm">
-                    <span className="text-[10px] font-black text-black uppercase tracking-widest">
+                  <div className="absolute top-4 right-4 bg-white/90 px-2.5 py-1 rounded-full shadow-sm">
+                    <span className="text-[12px] font-bold text-black">
                       {project.year}
                     </span>
                   </div>
                 </Link>
 
-                {/* Project Details */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-                  <div className="md:col-span-4">
-                    <span className="text-[#F2B800] text-[10px] font-black uppercase tracking-[0.3em] block mb-2">
-                      {project.category}
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black group-hover:translate-x-2 transition-transform duration-500">
-                      {project.name}
-                    </h2>
-                  </div>
+                {/* Metadata - 14px */}
+                <span className="text-[#F2B800] text-[14px] font-bold uppercase tracking-widest mb-2">
+                  {project.category}
+                </span>
 
-                  <div className="md:col-span-5">
-                    <p className="text-gray-500 text-lg font-medium leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
+                {/* Project Title - 24px */}
+                <h2 className="text-[24px] font-bold text-black group-hover:text-[#F2B800] transition-colors mb-4 leading-tight">
+                  {project.name}
+                </h2>
 
-                  <div className="md:col-span-3 flex md:justify-end pt-2">
-                    <Link
-                      href={`/projects/${project.slug}`}
-                      className="inline-flex items-center gap-3 group/link"
-                    >
-                      <span className="text-sm font-black uppercase tracking-widest border-b-2 border-black pb-1 group-hover/link:text-[#F2B800] group-hover/link:border-[#F2B800] transition-colors">
-                        View Case Study
-                      </span>
-                      <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center group-hover/link:bg-[#F2B800] group-hover/link:text-black group-hover/link:rotate-45 transition-all duration-300">
-                        <ArrowUpRight size={20} />
-                      </div>
-                    </Link>
-                  </div>
-                </div>
+                {/* CTA Link - 14px */}
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="inline-flex items-center gap-2 group/link mt-auto"
+                >
+                  <span className="text-[14px] font-bold uppercase tracking-widest border-b border-black pb-0.5">
+                    View Study
+                  </span>
+                  <ArrowUpRight
+                    size={16}
+                    className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"
+                  />
+                </Link>
               </motion.div>
             ))}
           </AnimatePresence>
+        </div>
+
+        {/* --- BOTTOM CTA --- */}
+        <section className="mt-32 bg-[#F2B800] p-12 rounded-[32px] flex flex-col items-center text-center">
+          <h2 className="text-[28px] font-bold text-black tracking-tight mb-6">
+            Ready to start your project?
+          </h2>
+          <button className="bg-black text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-widest text-[14px] hover:scale-105 transition-all flex items-center gap-3">
+            Work with us <ChevronRight size={18} />
+          </button>
         </section>
       </div>
     </main>

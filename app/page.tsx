@@ -7,6 +7,7 @@ import About from "@/src/components/About";
 import Process from "@/src/components/Process";
 import Results from "@/src/components/Results";
 import Testimonials from "@/src/components/Testimonials";
+import FinalCTA from "@/src/components/FinalCTA";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Process/>
       <Results />
       <Testimonials/>
+      <FinalCTA/>
     </div>
   );
 }

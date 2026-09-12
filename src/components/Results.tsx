@@ -32,9 +32,13 @@ const AnimatedMetric = ({
   }, [isInView, value, count]);
 
   return (
-    <span ref={ref} className="flex items-baseline">
-      <motion.span>{displayValue}</motion.span>
-      <span className="text-[#F2B800] ml-1">{suffix}</span>
+    // Added justify-center for mobile centering
+    <span
+      ref={ref}
+      className="flex items-baseline justify-center md:justify-start"
+    >
+      <motion.span className="text-black">{displayValue}</motion.span>
+      <span className="text-[#F2B800] ml-1 font-bold">{suffix}</span>
     </span>
   );
 };
@@ -68,24 +72,25 @@ const results = [
 
 export default function Results() {
   return (
-    <section className="bg-[#050505] py-24 md:py-48 px-6 border-y border-white/5">
+    <section className="bg-white py-16 md:py-48 px-6 border-y border-zinc-100">
       <div className="max-w-7xl mx-auto">
-        {/* --- HEADER --- */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-[1px] bg-white/20" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
+        {/* --- HEADER: Centered on mobile --- */}
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-20 md:mb-24 gap-8">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
+              <div className="w-10 h-[1px] bg-zinc-200" />
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">
                 Measurable Impact
               </span>
+              <div className="w-10 h-[1px] bg-zinc-200 md:hidden" />
             </div>
-            <h2 className="text-[20px] md:text-[32px] font-bold tracking-tighter text-white leading-none">
+            <h2 className="text-[32px] md:text-[64px] font-bold tracking-tighter text-black leading-none">
               Designed for <br />
               <span className="text-[#F2B800]">impact.</span>
             </h2>
           </div>
-          <div className="max-w-[300px]">
-            <p className="text-white/40 text-sm font-medium leading-relaxed">
+          <div className="max-w-[300px] text-center md:text-left">
+            <p className="text-zinc-500 text-sm font-medium leading-relaxed">
               We don&apos;t chase vanity metrics. We focus on the data that
               moves your business needle forward.
             </p>
@@ -93,49 +98,40 @@ export default function Results() {
         </div>
 
         {/* --- DATA GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
           {results.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-[#050505] p-10 md:p-12 flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-500 min-h-[320px]"
+              className="bg-white p-10 md:p-12 flex flex-col items-center md:items-stretch justify-between group hover:bg-zinc-50 transition-colors duration-500 min-h-[300px] md:min-h-[320px]"
             >
-              {/* Technical Indicator */}
-              <div className="flex justify-between items-start">
-                <div className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-[#F2B800] transition-colors" />
-                <span className="text-[9px] font-mono text-white/10 uppercase tracking-widest">
+              {/* Technical Indicator - Spaced on top, but centered content below */}
+              <div className="w-full flex justify-between items-start mb-8">
+                <div className="w-1.5 h-1.5 rounded-full bg-zinc-200 group-hover:bg-[#F2B800] transition-colors" />
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">
                   Metrics_v2.0
                 </span>
               </div>
 
-              {/* The Number */}
-              <div>
-                <div className="text-[20px] md:text-[60px] font-bold text-white tracking-tighter mb-4 flex items-baseline">
+              {/* The Number & Label: Centered on mobile */}
+              <div className="text-center md:text-left">
+                <div className="text-[48px] md:text-[64px] font-bold text-black tracking-tighter mb-2 flex items-baseline justify-center md:justify-start leading-none">
                   <AnimatedMetric value={item.value} suffix={item.suffix} />
                 </div>
-                <h3 className="text-[16px] md:text-lg font-medium text-white mb-4 uppercase tracking-tight">
+                <h3 className="text-[12px] md:text-sm font-bold text-black mb-4 uppercase tracking-widest">
                   {item.label}
                 </h3>
               </div>
 
-              {/* Sub-context */}
-              <p className="text-white/30 text-xs font-medium leading-relaxed">
+              {/* Sub-context: Centered on mobile */}
+              <p className="text-zinc-400 text-xs font-medium leading-relaxed text-center md:text-left">
                 {item.sub}
               </p>
             </motion.div>
           ))}
-        </div>
-
-        {/* --- BOTTOM PROOF DECOR --- */}
-        <div className="mt-20 flex justify-center items-center gap-10 opacity-20">
-          <div className="h-[1px] flex-grow bg-gradient-to-r from-transparent to-white/20" />
-          <span className="text-[8px] font-mono uppercase tracking-[1em] whitespace-nowrap">
-            Verified Outcomes Only
-          </span>
-          <div className="h-[1px] flex-grow bg-gradient-to-l from-transparent to-white/20" />
         </div>
       </div>
     </section>

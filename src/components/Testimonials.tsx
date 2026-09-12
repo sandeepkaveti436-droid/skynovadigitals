@@ -39,51 +39,58 @@ export default function Testimonials() {
     );
 
   return (
-    <section className="bg-[#050505] py-4 md:py-6 px-6 border-b border-white/5 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        {/* --- HEADER --- */}
-        <div className="flex items-center gap-4 mb-16 md:mb-16">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#F2B800]" />
-          <span className="text-[12px] font-black uppercase tracking-[0.5em] text-white/40">
-            Voice of the Partnership
-          </span>
+    <section className="bg-white py-16 md:py-24 px-6 border-b border-gray-100 overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
+        {/* --- FIXED HEADER PILL: Perfectly Centered on Mobile --- */}
+        <div className="w-full flex justify-center md:justify-start mb-12 md:mb-20">
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className="w-2 h-2 rounded-full bg-[#F2B800] shrink-0" />
+            <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-gray-400 whitespace-nowrap">
+              Voice of the Partnership
+            </span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-          {/* LEFT: STATIC TITLE */}
-          <div className="lg:col-span-4">
-            <h2 className="text-[20px] md:text-[32px] font-bold tracking-tighter text-white leading-[0.9]">
-              What our <br />
-              <span className="text-white/20 italic font-light">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center w-full">
+          {/* LEFT COLUMN: Title & Navigation */}
+          <div className="lg:col-span-4 flex flex-col items-center md:items-start text-center md:text-left">
+            <h2 className="text-[32px] md:text-[48px] font-bold tracking-tighter text-black leading-[1.0] mb-8">
+              What our <br className="hidden md:block" />
+              <span className="text-gray-300 italic font-light">
                 clients say.
               </span>
             </h2>
 
-            {/* NAVIGATION CONTROLS */}
-            <div className="flex gap-4 mt-12">
+            {/* NAV BUTTONS */}
+            <div className="flex gap-4">
               <button
                 onClick={prev}
-                className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-[#F2B800] hover:text-black hover:border-[#F2B800] transition-all duration-500 group"
+                className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-gray-200 flex items-center justify-center text-black hover:bg-[#F2B800] hover:text-black hover:border-[#F2B800] transition-all duration-500 group"
               >
                 <ChevronLeft
-                  size={24}
+                  size={22}
                   className="group-active:scale-75 transition-transform"
                 />
               </button>
               <button
                 onClick={next}
-                className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-[#F2B800] hover:text-black hover:border-[#F2B800] transition-all duration-500 group"
+                className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-gray-200 flex items-center justify-center text-black hover:bg-[#F2B800] hover:text-black hover:border-[#F2B800] transition-all duration-500 group"
               >
                 <ChevronRight
-                  size={24}
+                  size={22}
                   className="group-active:scale-75 transition-transform"
                 />
               </button>
             </div>
           </div>
 
-          {/* RIGHT: DYNAMIC QUOTE STAGE */}
-          <div className="lg:col-span-8 relative min-h-[400px] flex flex-col justify-between">
+          {/* RIGHT COLUMN: The Quote Stage */}
+          <div className="lg:col-span-8 relative flex flex-col items-center md:items-start w-full min-h-[480px] md:min-h-[400px] mt-10 md:mt-0">
+            {/* Background Decorative Quote Mark (Fixed Centering) */}
+            <div className="absolute top-[-30px] md:top-[-40px] left-1/2 -translate-x-1/2 md:left-[-30px] md:translate-x-0 opacity-[0.06] pointer-events-none z-0">
+              <Quote size={180} className="text-black" />
+            </div>
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
@@ -91,17 +98,18 @@ export default function Testimonials() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-12"
+                className="relative z-10 w-full flex flex-col items-center md:items-start text-center md:text-left"
               >
-                {/* Large Quote */}
-                <p className="text-[24px] md:text-[40px] lg:text-[48px] font-medium tracking-tight text-white/90 leading-tight">
+                {/* Main Quote */}
+                <p className="text-[22px] sm:text-[30px] md:text-[40px] lg:text-[46px] font-medium tracking-tight text-gray-800 leading-[1.3] md:leading-tight mb-12">
                   &ldquo;{testimonials[current].quote}&rdquo;
                 </p>
 
-                {/* Attribution & Metadata */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-t border-white/10 pt-10">
-                  <div>
-                    <h3 className="text-[20px] md:text-[28px] font-bold text-white mb-1">
+                {/* Attribution Row */}
+                <div className="w-full flex flex-col md:flex-row items-center md:items-end justify-between gap-10 border-t border-gray-100 pt-10">
+                  {/* Author Name & Role */}
+                  <div className="flex flex-col items-center md:items-start">
+                    <h3 className="text-[22px] md:text-[28px] font-bold text-black mb-1">
                       {testimonials[current].author}
                     </h3>
                     <p className="text-[#F2B800] text-sm font-bold uppercase tracking-widest">
@@ -109,22 +117,20 @@ export default function Testimonials() {
                     </p>
                   </div>
 
-                  <div className="text-right">
-                    <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.2em] mb-2">
-                      Technical Metadata
+                  {/* Metadata Tag */}
+                  <div className="flex flex-col items-center md:items-end">
+                    <p className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">
+                      Project Origin
                     </p>
-                    <p className="text-xs font-bold text-white/40 uppercase tracking-widest bg-white/5 px-4 py-2 rounded-lg border border-white/5">
-                      {testimonials[current].stats}
-                    </p>
+                    <div className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-lg">
+                      <span className="text-[10px] md:text-[11px] font-bold text-gray-500 uppercase tracking-widest">
+                        {testimonials[current].stats}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
-
-            {/* Background Decorative Quote Mark */}
-            <div className="absolute top-[-40px] left-[-20px] opacity-[0.03] pointer-events-none">
-              <Quote size={200} className="text-white" />
-            </div>
           </div>
         </div>
       </div>

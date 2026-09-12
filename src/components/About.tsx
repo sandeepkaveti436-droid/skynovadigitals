@@ -2,72 +2,72 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Plus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutSection() {
   const brandYellow = "#F2B800";
 
   return (
-    <section className="bg-[#050505] py-4 md:py-2 px-6 overflow-hidden">
+    <section className="bg-white py-16 md:py-24 px-6 overflow-hidden border-t border-gray-100">
       <div className="max-w-[1400px] mx-auto">
-        {/* --- TOP STATUS INDICATOR --- */}
-        <div className="flex items-center gap-3 mb-16 md:mb-24">
-          <span className="relative flex h-2 w-2">
+        {/* --- TOP STATUS INDICATOR: Centered on mobile --- */}
+        <div className="flex items-center justify-center md:justify-start gap-3 mb-16 md:mb-24">
+          <span className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2B800] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F2B800]"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F2B800]"></span>
           </span>
-          <span className="text-[12px] font-black uppercase tracking-[0.4em] text-white/30">
+          <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-gray-400 text-center">
             Based in the Digital Ether — Scaling Globally
           </span>
         </div>
 
         {/* --- MAIN GRID --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-          {/* LEFT: MASSIVE HEADLINE */}
-          <div className="lg:col-span-7">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+          {/* LEFT: MASSIVE HEADLINE: Centered on mobile */}
+          <div className="lg:col-span-7 flex flex-col items-center md:items-start">
             <motion.h2
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[28px] md:text-[42px] lg:text-[72px] font-bold tracking-tighter text-white leading-[1.85]"
+              className="text-[32px] md:text-[56px] lg:text-[84px] font-bold tracking-tighter text-black leading-[1.1] text-center md:text-left"
             >
               Small team.
               <br />
-              <span className="text-white/20">Big digital </span>
+              <span className="text-gray-300">Big digital </span>
               <br />
               <span className="italic font-light">thinking.</span>
             </motion.h2>
           </div>
 
-          {/* RIGHT: NARRATIVE CONTENT */}
-          <div className="lg:col-span-5 pt-4 md:pt-12">
+          {/* RIGHT: NARRATIVE CONTENT: Centered on mobile */}
+          <div className="lg:col-span-5 pt-4 md:pt-10 flex flex-col items-center md:items-start">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-10"
+              className="space-y-8 md:space-y-10 flex flex-col items-center md:items-start text-center md:text-left"
             >
-              <p className="text-[20px] md:text-[24px] text-white/80 leading-snug font-medium">
+              <p className="text-[18px] md:text-[26px] text-gray-800 leading-snug font-medium max-w-md md:max-w-none">
                 SkyNovaDigitals brings together design, technology and marketing
                 to help ambitious brands build better digital experiences.
               </p>
 
-              <div className="space-y-6">
-                <p className="text-white/40 text-[16px] md:text-[18px] leading-relaxed">
+              <div className="space-y-6 flex flex-col items-center md:items-start">
+                <p className="text-gray-500 text-[15px] md:text-[18px] leading-relaxed max-w-sm md:max-w-md">
                   We combine strategic thinking with hands-on execution—giving
                   businesses the quality of a premium studio without the
                   unnecessary complexity of a large agency.
                 </p>
 
-                {/* BRAND PILL TAGS */}
-                <div className="flex flex-wrap gap-3 pt-4">
+                {/* BRAND PILL TAGS: Centered on mobile */}
+                <div className="flex flex-wrap gap-2 md:gap-3 justify-center md:justify-start">
                   {["Strategy", "Design", "Code"].map((tag) => (
                     <span
                       key={tag}
-                      className="px-4 py-1 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/40"
+                      className="px-4 py-1.5 border border-black/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-50/50"
                     >
                       {tag}
                     </span>
@@ -75,35 +75,31 @@ export default function AboutSection() {
                 </div>
               </div>
 
-              {/* REFINED CTA */}
-              <div className="pt-10">
+              {/* REFINED CTA: Centered on mobile */}
+              <div className="pt-6 md:pt-8 w-full flex justify-center md:justify-start">
                 <Link
                   href="/about"
-                  className="group inline-flex items-center gap-6"
+                  className="group inline-flex items-center gap-5 md:gap-6 text-left"
                 >
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#F2B800] transition-colors duration-500">
-                      <ArrowRight
-                        className="text-white group-hover:text-[#F2B800] transition-colors duration-500"
-                        size={24}
-                      />
+                  <div className="relative shrink-0">
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black transition-all duration-500">
+                      <ArrowRight className="text-black group-hover:text-white transition-colors duration-500 w-5 h-5 md:w-6 md:h-6" />
                     </div>
-                    {/* Rotating Text/Circle Decor */}
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{
-                        duration: 10,
+                        duration: 15,
                         repeat: Infinity,
                         ease: "linear",
                       }}
-                      className="absolute inset-[-8px] border border-dashed border-white/5 rounded-full"
+                      className="absolute inset-[-8px] md:inset-[-10px] border border-dashed border-black/5 rounded-full"
                     />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F2B800] mb-1">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F2B800] mb-0.5">
                       Get to know us
                     </span>
-                    <span className="text-xl font-bold text-white border-b border-white/10 pb-1 group-hover:border-[#F2B800] transition-all">
+                    <span className="text-lg md:text-xl font-bold text-black border-b border-black/10 pb-1 group-hover:border-[#F2B800] transition-all">
                       More About Us
                     </span>
                   </div>
@@ -114,7 +110,7 @@ export default function AboutSection() {
         </div>
 
         {/* --- BOTTOM DECOR LINE --- */}
-        <div className="mt-32 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="mt-24 md:mt-32 w-full h-[1px] bg-gradient-to-r from-transparent via-black/10 to-transparent" />
       </div>
     </section>
   );

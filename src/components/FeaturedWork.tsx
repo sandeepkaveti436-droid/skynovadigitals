@@ -35,7 +35,6 @@ const projects = [
   },
 ];
 
-// Reusable Brand Button Component to keep code clean
 const ViewAllButton = ({ isMobile = false }) => {
   const brandYellow = "#F2B800";
   return (
@@ -45,13 +44,13 @@ const ViewAllButton = ({ isMobile = false }) => {
         initial="initial"
         className="flex items-center gap-2 cursor-pointer group scale-95 md:scale-100 origin-center md:origin-right"
       >
-        <div className="bg-[#181C1A]/90 backdrop-blur-md px-6 py-3 rounded-[16px] border border-white/10 transition-all duration-300 group-hover:bg-[#F2B800] group-hover:border-[#F2B800]">
+        <div className="bg-[#181C1A] px-6 py-2 rounded-[16px] border border-black/5 transition-all duration-300 group-hover:bg-[#F2B800]">
           <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-white group-hover:text-black whitespace-nowrap">
             View All Projects
           </span>
         </div>
         <div
-          className="w-[50px] h-[45px] rounded-[6px] rounded-tl-[25px] rounded-br-[25px] flex items-center justify-center text-black relative transition-all duration-500"
+          className="w-[50px] h-[45px] rounded-[6px] rounded-tl-[25px] rounded-br-[25px] flex items-center justify-center text-black relative transition-all duration-500 shadow-lg"
           style={{ backgroundColor: brandYellow }}
         >
           <ArrowRight size={20} strokeWidth={2.5} />
@@ -73,43 +72,44 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
     >
       <Link
         href={`/projects/${project.id}`}
-        className="relative aspect-[4/2.5] overflow-hidden rounded-2xl bg-[#111] mb-6"
+        className="relative aspect-[4/2.5] overflow-hidden rounded-2xl bg-gray-100 mb-6 border border-gray-100"
       >
         <motion.img
           src={project.image}
           alt={project.title}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6 }}
-          className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+          className="h-full w-full object-cover"
         />
         <div className="absolute top-4 right-4">
-          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-300">
+          <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-black/5 flex items-center justify-center text-black opacity-0 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-300 shadow-sm">
             <ArrowUpRight size={20} />
           </div>
         </div>
         <div className="absolute bottom-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div
-            className="w-12 h-8 rounded-tl-2xl rounded-br-2xl flex items-center justify-center"
+            className="w-12 h-8 rounded-tl-2xl rounded-br-2xl flex items-center justify-center shadow-lg"
             style={{ backgroundColor: brandYellow }}
           >
             <ArrowUpRight size={18} className="text-black" />
           </div>
         </div>
       </Link>
+
       <div className="space-y-2 px-1 text-center md:text-left">
         <div className="flex items-center justify-center md:justify-start gap-3">
           <span className="text-[14px] font-black text-[#F2B800] uppercase tracking-widest">
             {project.id}
           </span>
-          <div className="w-4 h-[1px] bg-white/10" />
-          <span className="text-[14px] font-bold text-white/30 uppercase tracking-widest">
+          <div className="w-4 h-[1px] bg-black/10" />
+          <span className="text-[14px] font-bold text-black/40 uppercase tracking-widest">
             {project.category}
           </span>
         </div>
-        <h3 className="text-[20px] font-bold text-white tracking-tight group-hover:text-[#F2B800] transition-colors">
+        <h3 className="text-[20px] font-bold text-black tracking-tight group-hover:text-[#F2B800] transition-colors">
           {project.title}
         </h3>
-        <p className="text-white/40 text-sm leading-relaxed max-w-[90%] mx-auto md:mx-0">
+        <p className="text-gray-500 text-sm leading-relaxed max-w-[90%] mx-auto md:mx-0">
           {project.description}
         </p>
       </div>
@@ -119,21 +119,20 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
 
 export default function FeaturedWork() {
   return (
-    <section className="bg-[#0A0A0A] py-12 md:py-24">
+    <section className="bg-white py-12 md:py-24 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6">
-        {/* --- HEADER --- */}
+        {/* --- HEADER: Centered on Mobile --- */}
         <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 md:mb-24 gap-10">
           <div className="space-y-4 text-center md:text-left">
             <p className="text-[#F2B800] text-[10px] font-black uppercase tracking-[0.4em] flex items-center justify-center md:justify-start gap-3">
               <span className="w-8 h-[1px] bg-[#F2B800]" /> SELECTED WORK
             </p>
-            <h2 className="text-[28px] md:text-[48px] font-bold tracking-tighter text-white leading-tight">
+            <h2 className="text-[28px] md:text-[48px] font-bold tracking-tighter text-black leading-tight">
               Built for{" "}
-              <span className="italic font-light text-white/30">Impact.</span>
+              <span className="italic font-light text-gray-300">Impact.</span>
             </h2>
           </div>
 
-          {/* This button only shows on Desktop */}
           <ViewAllButton isMobile={false} />
         </div>
 

@@ -7,7 +7,6 @@ const ValueStripSection = () => {
   const brandYellow = "#F2B800";
   const targetRef = useRef(null);
 
-  // Custom hook logic to handle responsive transform values
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -22,8 +21,6 @@ const ValueStripSection = () => {
     offset: ["start end", "end start"],
   });
 
-  // Desktop: Starts at 0, moves left
-  // Mobile: Starts at 24px (alignment with logo), moves left
   const xTranslate = useTransform(
     scrollYProgress,
     [0, 1],
@@ -49,10 +46,10 @@ const ValueStripSection = () => {
   return (
     <section
       ref={targetRef}
-      className="w-full bg-black py-16 md:py-24 lg:py-32 overflow-hidden border-t border-white/5"
+      className="w-full bg-white py-16 md:py-24 lg:py-32 overflow-hidden border-t border-gray-100"
     >
       <div className="w-full">
-        {/* --- POSITIONING STRIP --- */}
+        {/* --- POSITIONING STRIP (Updated for White Theme) --- */}
         <div className="mb-16 md:mb-32">
           <motion.div
             style={{ x: xTranslate }}
@@ -62,13 +59,11 @@ const ValueStripSection = () => {
               <h2
                 key={idx}
                 className={`text-[12vw] md:text-[8vw] font-black uppercase tracking-tighter leading-none ${
-                  idx % 2 === 1
-                    ? "text-transparent stroke-white/20"
-                    : "text-white"
+                  idx % 2 === 1 ? "text-transparent" : "text-black"
                 }`}
                 style={
                   idx % 2 === 1
-                    ? { WebkitTextStroke: "1px rgba(255,255,255,0.2)" }
+                    ? { WebkitTextStroke: "1px rgba(0,0,0,0.1)" }
                     : {}
                 }
               >
@@ -80,7 +75,7 @@ const ValueStripSection = () => {
 
         {/* --- SERVICES GRID & MARQUEE --- */}
         <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 border-y border-white/10 mb-20 md:mb-32">
+          <div className="grid grid-cols-2 lg:grid-cols-4 border-y border-black/10 mb-20 md:mb-32">
             {services.map((service, index) => (
               <motion.div
                 key={index}
@@ -88,20 +83,20 @@ const ValueStripSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`p-5 md:p-10 border-white/10 group hover:bg-white/[0.02] transition-colors
+                className={`p-5 md:p-10 border-black/10 group hover:bg-gray-50 transition-colors
                     ${index < 2 ? "border-b" : "lg:border-b-0"} 
                     ${index % 2 === 0 ? "border-r" : "lg:border-r"} 
                     ${index === 1 ? "lg:border-r" : ""}
                     ${index === 2 ? "lg:border-b-0" : ""}
                 `}
               >
-                <span className="text-[14px] font-medium tracking-[0.2em] text-[#F2B800] uppercase mb-4 md:mb-6 block">
+                <span className="text-[14px] font-black tracking-[0.2em] text-[#F2B800] uppercase mb-4 md:mb-6 block">
                   0{index + 1}
                 </span>
-                <h3 className="text-lg md:text-2xl font-bold text-white mb-2 md:mb-4 tracking-tight group-hover:text-[#F2B800] transition-colors">
+                <h3 className="text-lg md:text-2xl font-bold text-black mb-2 md:mb-4 tracking-tight group-hover:text-[#F2B800] transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-white/60 text-[14px] md:text-[16px] leading-relaxed max-w-[150px] md:max-w-[200px]">
+                <p className="text-gray-500 text-[14px] md:text-[16px] leading-relaxed max-w-[150px] md:max-w-[200px]">
                   {service.desc}
                 </p>
               </motion.div>
@@ -109,17 +104,18 @@ const ValueStripSection = () => {
           </div>
 
           <div className="space-y-8 md:space-y-12">
-            <p className="text-center text-[14px] md:text-[14px] font-bold uppercase tracking-[0.4em] text-[#F2B800]">
+            <p className="text-center text-[14px] md:text-[14px] font-bold uppercase tracking-[0.4em] text-gray-300">
               Trusted by Forward-Thinking Teams
             </p>
 
             <div className="relative w-full overflow-hidden flex items-center">
-              <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-black to-transparent z-10" />
-              <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-black to-transparent z-10" />
+              {/* White Fades for Smooth Edge Transitions */}
+              <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-white to-transparent z-10" />
+              <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-white to-transparent z-10" />
 
               <motion.div
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                 className="flex whitespace-nowrap gap-12 md:gap-20 items-center"
               >
                 {[...brandLogos, ...brandLogos].map((logo, i) => (
@@ -127,7 +123,8 @@ const ValueStripSection = () => {
                     key={i}
                     src={logo}
                     alt="logo"
-                    className="h-6 md:h-10 w-auto object-contain brightness-0 invert opacity-100 hover:opacity-100 transition-opacity flex-shrink-0"
+                    // Changed from white logos to grayscale black logos
+                    className="h-6 md:h-10 w-auto object-contain grayscale opacity-30 hover:opacity-100 transition-opacity duration-500 flex-shrink-0"
                   />
                 ))}
               </motion.div>
