@@ -4,25 +4,31 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 const projects = [
   {
     id: "01",
-    title: "Longevity Lounge",
-    category: "Healthcare / Wellness",
+    title: "Digify Agency",
+    category: "Brand, Web & UI/UX",
     description:
-      "Premium healthcare experience designed around trust and conversion.",
+      "A premium digital agency experience uniting brand strategy, design, and technical delivery.",
     image:
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    slug: "digify-agency",
+    liveUrl: "https://digify-agency.vercel.app/",
   },
   {
     id: "02",
-    title: "Omega Hospitals",
-    category: "Digital Experience",
+    title: "Orvixa Workspace",
+    category: "AI Product Platform",
     description:
-      "Reimagining healthcare journeys through intuitive digital design.",
+      "A unified work management platform for projects, teams, time, billing, and AI assistance.",
     image:
-      "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=800",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    slug: "orvixa-workspace",
+    liveUrl: "https://orvixas.vercel.app/",
   },
   {
     id: "03",
@@ -32,6 +38,8 @@ const projects = [
       "A modern business platform designed to help teams scale effortlessly.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800",
+    slug: "orvixa",
+    liveUrl: "https://orvixas.vercel.app/",
   },
 ];
 
@@ -64,14 +72,15 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   const brandYellow = "#F2B800";
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      custom={index}
+      variants={revealCardVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
       className="group flex flex-col"
     >
       <Link
-        href={`/projects/${project.id}`}
+        href={`/projects/${project.slug}`}
         className="relative aspect-[4/2.5] overflow-hidden rounded-2xl bg-gray-100 mb-6 border border-gray-100"
       >
         <motion.img
@@ -112,6 +121,14 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
         <p className="text-gray-500 text-sm leading-relaxed max-w-[90%] mx-auto md:mx-0">
           {project.description}
         </p>
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center md:justify-start gap-2 pt-3 text-[11px] font-black uppercase tracking-[0.18em] text-[#F2B800] hover:text-black transition-colors"
+        >
+          Live Experience <ArrowUpRight size={14} />
+        </a>
       </div>
     </motion.div>
   );
@@ -127,10 +144,10 @@ export default function FeaturedWork() {
             <p className="text-[#F2B800] text-[10px] font-black uppercase tracking-[0.4em] flex items-center justify-center md:justify-start gap-3">
               <span className="w-8 h-[1px] bg-[#F2B800]" /> SELECTED WORK
             </p>
-            <h2 className="text-[28px] md:text-[48px] font-bold tracking-tighter text-black leading-tight">
-              Built for{" "}
-              <span className="italic font-light text-gray-300">Impact.</span>
-            </h2>
+            <RevealHeading
+              text="Built for Impact."
+              className="text-[28px] md:text-[48px] font-bold tracking-tighter text-black leading-tight"
+            />
           </div>
 
           <ViewAllButton isMobile={false} />

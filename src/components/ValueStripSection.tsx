@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
 
 const ValueStripSection = () => {
   const brandYellow = "#F2B800";
@@ -37,10 +38,10 @@ const ValueStripSection = () => {
 
   const brandLogos = [
     "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-    "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+    "https://www.vectorlogo.zone/logos/ibm/ibm-icon.svg",
     "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
-    "https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_logo_%282012%29.svg",
-    "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+    "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+    "https://www.vectorlogo.zone/logos/amazon/amazon-icon.svg",
   ];
 
   return (
@@ -79,10 +80,11 @@ const ValueStripSection = () => {
             {services.map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                custom={index}
+                variants={revealCardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
                 className={`p-5 md:p-10 border-black/10 group hover:bg-gray-50 transition-colors
                     ${index < 2 ? "border-b" : "lg:border-b-0"} 
                     ${index % 2 === 0 ? "border-r" : "lg:border-r"} 

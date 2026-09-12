@@ -16,6 +16,7 @@ import {
   Layers,
   ChevronDown,
 } from "lucide-react";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 const services = [
   {
@@ -66,13 +67,11 @@ export default function ServicesPage() {
       <div className="max-w-[1440px] mx-auto">
         {/* --- PAGE HEADER (H1: 32px, Para: 24px) --- */}
         <header className="mb-16 md:mb-24 flex flex-col items-center md:items-start text-center md:text-left">
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <RevealHeading
+            as="h1"
+            text="Capabilities."
             className="text-[32px] font-bold tracking-tight text-black mb-6"
-          >
-            Capabilities<span className="text-[#F2B800]">.</span>
-          </motion.h1>
+          />
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -87,9 +86,10 @@ export default function ServicesPage() {
 
         {/* --- SECTION TITLE (H2: 24-28px) --- */}
         <div className="mb-12 border-b border-gray-100 pb-8 flex justify-center md:justify-start">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-black uppercase tracking-widest">
-            Our Core Services
-          </h2>
+          <RevealHeading
+            text="Our Core Services"
+            className="text-[24px] md:text-[28px] font-bold text-black uppercase tracking-widest"
+          />
         </div>
 
         {/* --- SERVICES GRID (4 COLUMNS ON DESKTOP) --- */}

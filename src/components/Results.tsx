@@ -8,6 +8,8 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 // --- HIGH-END COUNTER COMPONENT ---
 const AnimatedMetric = ({
@@ -84,10 +86,10 @@ export default function Results() {
               </span>
               <div className="w-10 h-[1px] bg-zinc-200 md:hidden" />
             </div>
-            <h2 className="text-[32px] md:text-[64px] font-bold tracking-tighter text-black leading-none">
-              Designed for <br />
-              <span className="text-[#F2B800]">impact.</span>
-            </h2>
+            <RevealHeading
+              text="Designed for impact."
+              className="text-[32px] md:text-[64px] font-bold tracking-tighter text-black leading-none"
+            />
           </div>
           <div className="max-w-[300px] text-center md:text-left">
             <p className="text-zinc-500 text-sm font-medium leading-relaxed">
@@ -102,10 +104,11 @@ export default function Results() {
           {results.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={index}
+              variants={revealCardVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
               className="bg-white p-10 md:p-12 flex flex-col items-center md:items-stretch justify-between group hover:bg-zinc-50 transition-colors duration-500 min-h-[300px] md:min-h-[320px]"
             >
               {/* Technical Indicator - Spaced on top, but centered content below */}

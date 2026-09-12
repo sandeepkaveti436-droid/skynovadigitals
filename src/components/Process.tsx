@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Search, PenTool, Code2, TrendingUp } from "lucide-react";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
 
 const steps = [
   {
@@ -175,8 +176,10 @@ export default function Process() {
           {steps.map((step) => (
             <motion.div
               key={step.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={Number(step.id) - 1}
+              variants={revealCardVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
               /* Reduced p-8 to p-6 for tighter fit */
               className="bg-[#F9F9F9] border border-black/[0.05] rounded-[24px] p-6 relative overflow-hidden flex flex-col items-center text-center"
@@ -191,7 +194,7 @@ export default function Process() {
                 <div className="w-12 h-12 p-3 bg-white border border-black/5 rounded-2xl shadow-sm mb-4 mx-auto">
                   {step.icon}
                 </div>
-                
+
                 <span className="text-[9px] font-black text-[#F2B800] uppercase tracking-[0.4em] block mb-2">
                   {step.phase}
                 </span>
@@ -201,7 +204,7 @@ export default function Process() {
                 <p className="text-gray-500 text-sm leading-relaxed mb-5">
                   {step.desc}
                 </p>
-                
+
                 {/* Centered Tags */}
                 <div className="flex flex-wrap gap-2 justify-center">
                   {step.tags.map((tag) => (

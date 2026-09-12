@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Target, Eye, Heart, Rocket } from "lucide-react";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 export default function AboutPage() {
   const brandYellow = "#F2B800";
@@ -23,17 +24,11 @@ export default function AboutPage() {
 
         {/* --- HERO SECTION --- */}
         <header className="flex flex-col items-center md:items-start text-center md:text-left">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <RevealHeading
+            as="h1"
+            text="We are SkyNova. A boutique studio turning visionary ideas into high-performance products."
             className="text-[32px] md:text-6xl font-bold tracking-tighter leading-tight mb-12 md:mb-20"
-          >
-            We are{" "}
-            <span className="text-gray-300 italic font-light">SkyNova</span>. A
-            boutique studio turning{" "}
-            <span className="text-[#F2B800]">visionary</span> ideas into
-            high-performance products.
-          </motion.h1>
+          />
         </header>
 
         {/* --- PHILOSOPHY GRID --- */}
@@ -42,9 +37,10 @@ export default function AboutPage() {
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#F2B800] mb-4">
               Our Philosophy
             </p>
-            <h2 className="text-[24px] md:text-3xl font-bold tracking-tight leading-tight">
-              Design is not just how it looks, but how it works.
-            </h2>
+            <RevealHeading
+              text="Design is not just how it looks, but how it works."
+              className="text-[24px] md:text-3xl font-bold tracking-tight leading-tight"
+            />
           </div>
           <div className="md:col-span-8 flex flex-col items-center md:items-start text-center md:text-left space-y-8">
             <p className="text-[20px] md:text-xl text-gray-600 leading-relaxed font-medium">

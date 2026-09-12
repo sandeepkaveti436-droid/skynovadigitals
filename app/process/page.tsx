@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import RevealHeading from "@/src/components/ui/RevealHeading";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
 
 const steps = [
   {
@@ -31,13 +33,11 @@ export default function ProcessPage() {
     <main className="bg-white min-h-screen pt-32 pb-24 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         <header className="mb-32 text-center">
-          <motion.h1
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+          <RevealHeading
+            as="h1"
+            text="Our Way."
             className="text-7xl md:text-[10vw] font-bold tracking-tighter leading-none text-black"
-          >
-            Our <span className="text-[#F2B800]">Way</span>.
-          </motion.h1>
+          />
           <p className="text-gray-400 font-bold uppercase tracking-[0.5em] text-xs mt-6">
             A Methodical Approach to Excellence
           </p>
@@ -47,8 +47,10 @@ export default function ProcessPage() {
           {steps.map((step, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              custom={i}
+              variants={revealCardVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
               className="group border-t border-gray-100 py-16 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-gray-50 transition-colors px-4"
             >

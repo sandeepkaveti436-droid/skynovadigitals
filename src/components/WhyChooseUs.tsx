@@ -3,6 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 const pillars = [
   {
@@ -43,10 +45,10 @@ export default function WhyChooseUs() {
                 The Partnership
               </span>
             </div>
-            <h2 className="text-[30px] md:text-[48px] font-bold tracking-tighter text-black leading-[1.1]">
-              More than <br className="hidden md:block" />
-              an agency.
-            </h2>
+            <RevealHeading
+              text="More than an agency."
+              className="text-[30px] md:text-[48px] font-bold tracking-tighter text-black leading-[1.1]"
+            />
             <p className="mt-6 md:mt-12 text-gray-500 text-base md:text-lg max-w-xs font-medium leading-tight">
               We operate as your dedicated digital product department.
             </p>
@@ -57,10 +59,11 @@ export default function WhyChooseUs() {
             {pillars.map((item, index) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                custom={index}
+                variants={revealCardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
                 className="group relative border-b border-black/10 py-10 md:py-16 lg:pl-20 flex flex-col items-center text-center md:items-start md:text-left md:flex-row transition-all duration-500 hover:bg-gray-50/50"
               >
                 {/* ID & Laser Indicator */}

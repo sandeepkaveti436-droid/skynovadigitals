@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 const testimonials = [
   {
@@ -54,12 +55,10 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center w-full">
           {/* LEFT COLUMN: Title & Navigation */}
           <div className="lg:col-span-4 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="text-[32px] md:text-[48px] font-bold tracking-tighter text-black leading-[1.0] mb-8">
-              What our <br className="hidden md:block" />
-              <span className="text-gray-300 italic font-light">
-                clients say.
-              </span>
-            </h2>
+            <RevealHeading
+              text="What our clients say."
+              className="text-[32px] md:text-[48px] font-bold tracking-tighter text-black leading-[1.0] mb-8"
+            />
 
             {/* NAV BUTTONS */}
             <div className="flex gap-4">

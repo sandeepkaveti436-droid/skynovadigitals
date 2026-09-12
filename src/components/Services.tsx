@@ -4,6 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Globe, Code2, Rocket, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { revealCardVariants } from "@/src/components/ui/RevealCard";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 // Custom SVG to replace missing Lucide Figma icon
 const DesignIcon = () => (
@@ -67,13 +69,13 @@ const ExploreButton = () => {
         initial="initial"
         className="flex items-center gap-2 cursor-pointer group scale-95 md:scale-100"
       >
-        <div className="bg-[#181C1A] px-6 py-2 md:px-8 md:py-4 rounded-[16px] border border-gray-800 transition-all duration-300 group-hover:bg-[#F2B800]">
+        <div className="bg-[#181C1A] px-6 py-2 md:px-8 md:py-3 rounded-[16px] border border-gray-800 transition-all duration-300 group-hover:bg-[#F2B800]">
           <span className="text-[12px] md:text-[14px] font-bold uppercase tracking-[0.2em] text-white group-hover:text-black whitespace-nowrap">
             Explore Services
           </span>
         </div>
         <div
-          className="w-[50px] h-[50px] md:w-[65px] md:h-[54px] rounded-[6px] rounded-tl-[25px] rounded-br-[25px] flex items-center justify-center text-black relative transition-all duration-500 shadow-sm"
+          className="w-[50px] h-[50px] md:w-[65px] md:h-[44px] rounded-[6px] rounded-tl-[25px] rounded-br-[25px] flex items-center justify-center text-black relative transition-all duration-500 shadow-sm"
           style={{ backgroundColor: brandYellow }}
         >
           <ArrowRight size={22} strokeWidth={2.5} />
@@ -88,10 +90,11 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      custom={index}
+      variants={revealCardVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group relative flex flex-col justify-between p-8 rounded-[32px] bg-gray-50 border border-gray-100 hover:border-[#F2B800]/40 hover:bg-white hover:shadow-2xl hover:shadow-gray-200 transition-all duration-500 overflow-hidden min-h-[380px] text-center md:text-left items-center md:items-start"
     >
       <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#F2B800]/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -148,13 +151,10 @@ export default function Services() {
               </span>
               <div className="w-12 h-[1px] bg-[#F2B800] md:hidden" />
             </div>
-            <h2 className="text-[32px] md:text-[48px] font-bold tracking-tighter text-black leading-tight">
-              Modern Solutions.
-              <br />
-              <span className="text-gray-300 italic font-light">
-                End-to-End.
-              </span>
-            </h2>
+            <RevealHeading
+              text="Modern Solutions. End-to-End."
+              className="text-[32px] md:text-[48px] font-bold tracking-tighter text-black leading-tight"
+            />
           </div>
 
           {/* Desktop Button Only */}

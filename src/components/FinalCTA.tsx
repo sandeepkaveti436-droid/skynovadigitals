@@ -73,7 +73,7 @@ export default function FinalCTA() {
         {/* --- HEADLINE (Updated to Black) --- */}
         <BlurSplitText
           text="Have an idea worth building?"
-          className="text-[28px] sm:text-[42px] md:text-[48px] lg:text-[56px] font-bold tracking-tighter text-black leading-[1.1] md:leading-[1.0] mb-8"
+          className="text-[24px] sm:text-[32px] md:text-[32px] lg:text-[36px] font-bold tracking-tighter text-black leading-[1.1] md:leading-[1.0] mb-8"
         />
 
         <motion.p
@@ -95,13 +95,13 @@ export default function FinalCTA() {
               initial="initial"
               className="flex items-center justify-center gap-2 cursor-pointer group"
             >
-              <div className="bg-[#181C1A] px-6 md:px-10 py-4 md:py-5 rounded-[16px] md:rounded-[20px] border border-zinc-800 transition-all duration-300 group-hover:bg-[#F0B400]">
-                <span className="text-[12px] md:text-[14px] font-bold uppercase tracking-[0.15em] text-white group-hover:text-black whitespace-nowrap">
+              <div className="bg-[#181C1A] px-6 md:px-10 py-4 md:py-3 rounded-[16px] md:rounded-[20px] border border-zinc-800 transition-all duration-300 group-hover:bg-[#F0B400]">
+                <span className="text-[12px] md:text-[14px] font-medium uppercase tracking-[0.15em] text-white group-hover:text-black whitespace-nowrap">
                   Start Your Project
                 </span>
               </div>
               <div
-                className="w-[50px] h-[50px] md:w-[65px] md:h-[65px] rounded-[6px] rounded-tl-[25px] md:rounded-tl-[20px] rounded-br-[25px] md:rounded-br-[20px] flex items-center justify-center text-black relative transition-all duration-500 shadow-xl"
+                className="w-[50px] h-[50px] md:w-[65px] md:h-[45px] rounded-[6px] rounded-tl-[25px] md:rounded-tl-[20px] rounded-br-[25px] md:rounded-br-[20px] flex items-center justify-center text-black relative transition-all duration-500 shadow-xl"
                 style={{ backgroundColor: brandYellow }}
               >
                 <ArrowRight
@@ -134,6 +134,7 @@ export default function FinalCTA() {
             </div>
           </Link>
         </div>
+
       </div>
     </section>
   );

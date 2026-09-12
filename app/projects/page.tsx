@@ -4,9 +4,30 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import RevealHeading from "@/src/components/ui/RevealHeading";
 
 // --- PROJECT DATA (Added more to show the 4-column grid) ---
 const projects = [
+  {
+    id: 5,
+    name: "Digify Agency",
+    category: "Web Design",
+    year: "2026",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    slug: "digify-agency",
+    liveUrl: "https://digify-agency.vercel.app/",
+  },
+  {
+    id: 6,
+    name: "Orvixa Workspace",
+    category: "Product Design",
+    year: "2026",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    slug: "orvixa-workspace",
+    liveUrl: "https://orvixas.vercel.app/",
+  },
   {
     id: 1,
     name: "Longevity Lounge",
@@ -45,7 +66,14 @@ const projects = [
   },
 ];
 
-const categories = ["All", "Web Design", "UI/UX", "Development", "Branding"];
+const categories = [
+  "All",
+  "Web Design",
+  "Product Design",
+  "UI/UX",
+  "Development",
+  "Branding",
+];
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState("All");
@@ -58,14 +86,11 @@ export default function ProjectsPage() {
       <div className="max-w-[1440px] mx-auto">
         {/* --- HERO SECTION --- */}
         <section className="mb-12 flex flex-col items-center md:items-start text-center md:text-left">
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <RevealHeading
+            as="h1"
+            text="Work that speaks for itself."
             className="text-[32px] font-bold tracking-tight text-black mb-4"
-          >
-            Work that speaks{" "}
-            <span className="text-gray-300 italic font-light">for itself.</span>
-          </motion.h1>
+          />
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -78,24 +103,24 @@ export default function ProjectsPage() {
           </motion.p>
         </section>
 
-    {/* --- FILTER BAR --- */}
-<section className="mb-12 md:mb-16 w-full flex justify-center md:justify-start">
-  <div className="flex flex-wrap justify-center md:justify-start gap-3 max-w-full">
-    {categories.map((cat) => (
-      <button
-        key={cat}
-        onClick={() => setFilter(cat)}
-        className={`px-6 py-2.5 rounded-full text-[14px] font-bold uppercase tracking-wider transition-all duration-300 border ${
-          filter === cat
-            ? "bg-black text-white border-black shadow-md"
-            : "bg-gray-50 text-gray-400 border-gray-100 hover:border-black hover:text-black"
-        }`}
-      >
-        {cat}
-      </button>
-    ))}
-  </div>
-</section>
+        {/* --- FILTER BAR --- */}
+        <section className="mb-12 md:mb-16 w-full flex justify-center md:justify-start">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 max-w-full">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-6 py-2.5 rounded-full text-[14px] font-bold uppercase tracking-wider transition-all duration-300 border ${
+                  filter === cat
+                    ? "bg-black text-white border-black shadow-md"
+                    : "bg-gray-50 text-gray-400 border-gray-100 hover:border-black hover:text-black"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </section>
 
         {/* --- PROJECTS GRID: 4 COLUMNS ON DESKTOP --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
@@ -151,6 +176,14 @@ export default function ProjectsPage() {
                     className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"
                   />
                 </Link>
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 mt-4 text-[12px] font-bold uppercase tracking-widest text-[#F2B800] hover:text-black transition-colors"
+                >
+                  Live Experience <ArrowUpRight size={14} />
+                </a>
               </motion.div>
             ))}
           </AnimatePresence>
