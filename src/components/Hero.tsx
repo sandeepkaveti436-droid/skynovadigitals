@@ -24,7 +24,7 @@ export default function Hero() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.33, 1, 0.68, 1],
+        ease: [0.33, 1, 0.68, 1] as const,
         delay: i * 0.1,
       },
     }),
@@ -44,7 +44,12 @@ export default function Hero() {
         <img
           src="/herobannerimages/hero-bg.png"
           alt="SkyNova"
-          className="h-full w-full object-cover object-center opacity-80"
+          className="h-full w-full object-cover object-center opacity-80 md:block hidden"
+        />
+        <img
+          src="/herobannerimages/mobile-bg.png"
+          alt="SkyNova"
+          className="h-full w-full object-cover object-[center_20%] opacity-80 block md:hidden"
         />
       </motion.div>
 
