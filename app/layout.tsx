@@ -8,50 +8,66 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://skynovadigitals.vercel.app"),
   title: {
-    default: "SkyNova Digitals | Digital Product Studio",
+    default: "SkyNova Digitals | Digital Transformation & Product Studio",
     template: "%s | SkyNova Digitals",
   },
   description:
-    "SkyNova Digitals is a digital product studio creating high-performance websites, product design, AI automation, and growth systems for ambitious brands.",
+    "SkyNova Digitals is a premier digital transformation studio specializing in SEO, web development, AI automation, and high-performance growth systems. We turn your ideas into reality.",
   keywords: [
+    "SkyNova Digitals",
+    "Sky Nov Digitals",
+    "skynovadigitals",
     "digital product studio",
     "web design agency",
+    "SEO services",
+    "digital marketing agency",
     "web development agency",
-    "UI UX design studio",
-    "Next.js development",
     "AI automation agency",
-    "digital transformation agency",
-    "growth strategy agency",
+    "digital transformation studio",
     "high-performance websites",
-    "SkyNova Digitals",
   ],
   authors: [{ name: "SkyNova Digitals" }],
   creator: "SkyNova Digitals",
   alternates: { canonical: "/" },
+  verification: {
+    // This is the code from your filename google0a488f45af830b1f.html
+    google: "0a488f45af830b1f",
+  },
   openGraph: {
     type: "website",
+    locale: "en_US",
     url: "https://skynovadigitals.vercel.app",
     siteName: "SkyNova Digitals",
-    title: "SkyNova Digitals | Digital Product Studio",
+    title: "SkyNova Digitals | Turning Ideas Into Reality",
     description:
-      "High-performance websites, digital products, AI automation, and growth systems for ambitious brands.",
+      "Expert digital solutions, SEO services, and AI automation to scale your business online with SkyNova Digitals.",
     images: [
       {
         url: "/herobannerimages/hero-bg.png",
-        width: 1600,
-        height: 900,
-        alt: "SkyNova Digitals digital product studio",
+        width: 1200,
+        height: 630,
+        alt: "SkyNova Digitals - Digital Transformation Studio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SkyNova Digitals | Digital Product Studio",
+    title: "SkyNova Digitals | Digital Transformation Studio",
     description:
-      "High-performance websites, digital products, AI automation, and growth systems.",
+      "High-performance websites, SEO, AI automation, and digital growth systems.",
     images: ["/herobannerimages/hero-bg.png"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -63,6 +79,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased bg-white">
         <Analytics />
+        {/* Structured Data for Google (Schema.org) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -70,18 +87,20 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
               name: "SkyNova Digitals",
+              alternateName: "Sky Nov Digitals",
               url: "https://skynovadigitals.vercel.app",
+              logo: "https://skynovadigitals.vercel.app/favicon.ico",
               description:
-                "Digital product studio specializing in web design, development, AI automation, and growth strategy.",
+                "SkyNova Digitals is a digital transformation studio specializing in SEO, web design, development, and AI automation.",
               image:
                 "https://skynovadigitals.vercel.app/herobannerimages/hero-bg.png",
               areaServed: "Worldwide",
               serviceType: [
-                "Web Design",
+                "SEO Services",
                 "Web Development",
                 "UI/UX Design",
                 "AI Automation",
-                "Growth Strategy",
+                "Digital Marketing",
               ],
             }),
           }}
