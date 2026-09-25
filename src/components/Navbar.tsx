@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // 1. Import usePathname
 import { ArrowRight } from "lucide-react";
 
-// --- Custom Social Icons ---
+// --- Custom Social Icons (Keep these as they are) ---
 const InstagramIcon = () => (
   <svg
     width="18"
@@ -56,6 +57,12 @@ const TwitterIcon = () => (
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname(); // 2. Get current path
+
+  // 3. Logic: If NOT on home page OR if scrolled, use the dark/opaque theme
+  const isHomePage = pathname === "/";
+  const useDarkTheme = isScrolled || !isHomePage;
+
   const brandYellow = "#F2B800";
 
   const navLinks = [
@@ -88,11 +95,11 @@ export default function Navbar() {
         <motion.div
           animate={{
             backgroundColor:
-              isScrolled || isMobileMenuOpen
+              useDarkTheme || isMobileMenuOpen
                 ? "rgba(255, 255, 255, 0.98)"
                 : "rgba(255, 255, 255, 0.08)",
             border:
-              isScrolled || isMobileMenuOpen
+              useDarkTheme || isMobileMenuOpen
                 ? "1px solid rgba(0,0,0,0.1)"
                 : "1px solid rgba(255,255,255,0.1)",
           }}
@@ -100,7 +107,6 @@ export default function Navbar() {
         >
           <Link href="/" className="flex items-center gap-3">
             <img src="/logo/LOGO.png" alt="SND" className="h-8 w-auto" />
-          
           </Link>
           <div
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -110,19 +116,19 @@ export default function Navbar() {
               animate={
                 isMobileMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }
               }
-              className={`w-6 h-0.5 ${isScrolled || isMobileMenuOpen ? "bg-black" : "bg-[#F2B800]"}`}
+              className={`w-6 h-0.5 ${useDarkTheme || isMobileMenuOpen ? "bg-black" : "bg-[#F2B800]"}`}
             />
             <motion.span
               animate={
                 isMobileMenuOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }
               }
-              className={`w-6 h-0.5 ${isScrolled || isMobileMenuOpen ? "bg-black" : "bg-[#F2B800]"}`}
+              className={`w-6 h-0.5 ${useDarkTheme || isMobileMenuOpen ? "bg-black" : "bg-[#F2B800]"}`}
             />
             <motion.span
               animate={
                 isMobileMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }
               }
-              className={`w-6 h-0.5 ${isScrolled || isMobileMenuOpen ? "bg-black" : "bg-[#F2B800]"}`}
+              className={`w-6 h-0.5 ${useDarkTheme || isMobileMenuOpen ? "bg-black" : "bg-[#F2B800]"}`}
             />
           </div>
         </motion.div>
@@ -130,10 +136,10 @@ export default function Navbar() {
         {/* --- DESKTOP: LOGO PILL --- */}
         <motion.div
           animate={{
-            backgroundColor: isScrolled
+            backgroundColor: useDarkTheme
               ? "rgba(255, 255, 255, 0.95)"
               : "rgba(255, 255, 255, 0.08)",
-            border: isScrolled
+            border: useDarkTheme
               ? "1px solid rgba(0,0,0,0.1)"
               : "1px solid rgba(255,255,255,0.1)",
           }}
@@ -142,7 +148,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3">
             <img src="/logo/LOGO.png" alt="SND" className="h-9 w-auto" />
             <span
-              className={`text-sm font-black tracking-tighter uppercase transition-colors ${isScrolled ? "text-black" : "text-[#F2B800]"}`}
+              className={`text-sm font-black tracking-tighter uppercase transition-colors ${useDarkTheme ? "text-black" : "text-[#F2B800]"}`}
             >
               Sky Nova Digitals
             </span>
@@ -152,10 +158,10 @@ export default function Navbar() {
         {/* --- DESKTOP: NAV LINKS PILL --- */}
         <motion.div
           animate={{
-            backgroundColor: isScrolled
+            backgroundColor: useDarkTheme
               ? "rgba(255, 255, 255, 0.95)"
               : "rgba(255, 255, 255, 0.05)",
-            border: isScrolled
+            border: useDarkTheme
               ? "1px solid rgba(0,0,0,0.1)"
               : "1px solid rgba(255,255,255,0.1)",
           }}
@@ -166,7 +172,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               className={`px-5 py-2 text-[12px] font-medium uppercase tracking-widest transition-colors ${
-                isScrolled
+                useDarkTheme
                   ? "text-black/50 hover:text-black"
                   : "text-white/50 hover:text-[#F2B800]"
               }`}
@@ -177,8 +183,8 @@ export default function Navbar() {
           <Link
             href="/contact"
             className={`px-6 py-2 text-[12px] font-medium uppercase tracking-widest rounded-[14px] shadow-xl transition-all ${
-              isScrolled
-                ? "bg-[#F2B800] text-black hover:bg-[#F2B800] hover:text-black"
+              useDarkTheme
+                ? "bg-[#F2B800] text-black hover:bg-black hover:text-white"
                 : "bg-[#F2B800] text-black hover:bg-white"
             }`}
           >
@@ -187,7 +193,7 @@ export default function Navbar() {
         </motion.div>
       </nav>
 
-      {/* --- MOBILE OVERLAY --- */}
+      {/* --- MOBILE OVERLAY (Keep existing code) --- */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -216,8 +222,6 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
-
-              {/* BRAND BUTTON INTEGRATED IN MENU */}
               <Link
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -234,7 +238,6 @@ export default function Navbar() {
                 </div>
               </Link>
             </div>
-
             <div className="flex flex-col gap-6 pt-8 border-t border-black/5">
               <p className="text-[12px] font-bold uppercase tracking-[0.3em] text-black/30">
                 Connect

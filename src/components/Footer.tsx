@@ -5,16 +5,21 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 const RollingLink = ({ title, href }: { title: string; href: string }) => {
+  // Check if link is external (starts with http)
+  const isExternal = href.startsWith("http");
+
   return (
-    <Link href={href} className="group relative block overflow-hidden h-8">
-      {" "}
-      {/* Increased height from h-6 to h-8 */}
+    <Link
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      className="group relative block overflow-hidden h-8"
+    >
       <motion.div
-        whileHover={{ y: -32 }} // Increased from -24 to -32 to match new height
+        whileHover={{ y: -32 }}
         transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
         className="flex flex-col items-center md:items-start"
       >
-        {/* Added whitespace-nowrap and matched height h-8 */}
         <span className="text-[12px] md:text-sm font-medium text-white/40 uppercase tracking-wider h-8 flex items-center group-hover:text-[#F0B400] transition-colors whitespace-nowrap">
           {title}
         </span>
@@ -28,16 +33,14 @@ const RollingLink = ({ title, href }: { title: string; href: string }) => {
 
 export default function Footer() {
   const [time, setTime] = useState("");
-  const brandYellow = "#F0B400";
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      // Updated to India Standard Time
       setTime(
         now.toLocaleTimeString("en-IN", {
           timeZone: "Asia/Kolkata",
-          hour12: false,
+          hour12: true,
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -54,19 +57,31 @@ export default function Footer() {
       { name: "Work", href: "/projects" },
       { name: "Services", href: "/services" },
       { name: "About", href: "/about" },
-      { name: "Insights", href: "/insights" },
+      { name: "Process", href: "/process" },
     ],
     services: [
       { name: "Digital Experiences", href: "/services" },
       { name: "UI/UX Design", href: "/services" },
       { name: "Development", href: "/services" },
-      { name: "Growth & Marketing", href: "/services" },
+      { name: "AI Automation", href: "/services" },
     ],
     connect: [
-      { name: "LinkedIn", href: "#" },
-      { name: "Instagram", href: "#" },
-      { name: "Behance", href: "#" },
-      { name: "Dribbble", href: "#" },
+      {
+        name: "Instagram",
+        href: "https://www.instagram.com/skynovadigitals",
+      },
+      {
+        name: "YouTube",
+        href: "https://www.youtube.com/@skynovadigitals?sub_confirmation=1",
+      },
+      {
+        name: "LinkedIn",
+        href: "https://linkedin.com/company/skynovadigitals",
+      },
+      {
+        name: "Twitter / X",
+        href: "https://twitter.com/skynovadigitals",
+      },
     ],
   };
 
@@ -80,7 +95,6 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* --- TOP BRAND SECTION --- */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20 md:mb-24">
           <div className="lg:col-span-6 flex flex-col items-center text-center md:items-start md:text-left">
             <div className="flex items-center gap-3 mb-6">
@@ -97,7 +111,7 @@ export default function Footer() {
               Designing digital experiences that move businesses forward.
             </p>
 
-            {/* Metadata: Time & Location */}
+            {/* Time & Location */}
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-12">
               <div className="flex flex-col">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F0B400] mb-2">
@@ -176,14 +190,14 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* --- CONTACT & BOTTOM BAR --- */}
+        {/* --- BOTTOM BAR --- */}
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center md:items-end gap-12 text-center md:text-left">
           <div className="group cursor-pointer flex flex-col items-center md:items-start">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F0B400] mb-2">
               Business Email
             </p>
             <p className="text-[10px] font-medium text-white/80 uppercase tracking-[0.2em] mb-3 max-w-[250px]">
-              Reach out for collaborations, inquiries, or just to say hi!
+              Reach out for collaborations or inquiries.
             </p>
             <a
               href="mailto:skynovadigitals@gmail.com"
@@ -210,7 +224,7 @@ export default function Footer() {
             </div>
             <p className="text-[9px] font-medium text-white/80 uppercase tracking-[0.3em] leading-relaxed">
               © 2024 SkyNova Digitals. All rights reserved. <br />
-              digital experiences in Hyderabad, India.
+              Creating digital experiences in Hyderabad, India.
             </p>
           </div>
         </div>
