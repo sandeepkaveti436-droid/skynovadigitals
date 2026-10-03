@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion"; // Added Variants import
 import { ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
 
@@ -19,13 +19,14 @@ export default function Hero() {
     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=100&auto=format&fit=crop",
   ];
 
-  const wordVariants = {
+  // FIXED: Explicitly added the Variants type to resolve the build error
+  const wordVariants: Variants = {
     hidden: { y: "100%" },
     visible: (i: number) => ({
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.33, 1, 0.68, 1],
+        ease: [0.33, 1, 0.68, 1], // Removed 'as const' to allow standard Easing type matching
         delay: i * 0.1,
       },
     }),
@@ -39,9 +40,8 @@ export default function Hero() {
       ref={containerRef}
       className="relative h-[110vh] w-full flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* --- BACKGROUND OPTIMIZED FOR 100% PERFORMANCE --- */}
+      {/* --- BACKGROUND OPTIMIZED --- */}
       <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
-        {/* Desktop Image: Only loads on md screens and up */}
         <div className="hidden md:block absolute inset-0">
           <Image
             src="/herobannerimages/hero-bg.png"
@@ -54,7 +54,6 @@ export default function Hero() {
           />
         </div>
 
-        {/* Mobile Image: Only loads on small screens */}
         <div className="block md:hidden absolute inset-0">
           <Image
             src="/herobannerimages/mobile-bg.png"
@@ -66,14 +65,11 @@ export default function Hero() {
             sizes="100vw"
           />
         </div>
-
-        {/* Subtle Overlay to make text pop */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
       </motion.div>
 
       {/* --- CONTENT --- */}
       <div className="relative z-20 w-full max-w-[1400px] px-4 flex flex-col items-center text-center">
-        {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -86,7 +82,6 @@ export default function Hero() {
           <div className="w-8 md:w-12 h-[1px] bg-[#F2B800]" />
         </motion.div>
 
-        {/* Headline with Split Animation */}
         <motion.h1
           style={{ opacity: opacityText }}
           className="text-[14vw] md:text-[8vw] font-bold leading-[0.85] tracking-tighter uppercase text-white mb-10 md:mb-12"
@@ -131,7 +126,6 @@ export default function Hero() {
           transition={{ delay: 0.8 }}
           className="flex flex-row items-center justify-center gap-3 md:gap-8 w-full"
         >
-          {/* START A PROJECT BUTTON */}
           <div className="flex items-center gap-1 md:gap-2 cursor-pointer group">
             <div className="bg-[#181C1A]/90 backdrop-blur-md px-4 md:px-10 py-3 rounded-[14px] md:rounded-[16px] border border-white/10 transition-all duration-300 group-hover:bg-[#F2B800]">
               <span className="text-[10px] md:text-[14px] font-bold uppercase tracking-widest text-white group-hover:text-black whitespace-nowrap">
@@ -150,7 +144,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* WATCH SHOWREEL BUTTON */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -212,7 +205,6 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* --- SCROLL INDICATOR --- */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}

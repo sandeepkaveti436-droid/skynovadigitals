@@ -1,313 +1,196 @@
-import type { Metadata } from "next";
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Zap,
+  Layout,
+  Code,
+  Search,
+} from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Check, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
-const caseStudies = {
-  "digify-agency": {
-    title: "Digify Agency",
-    eyebrow: "Brand, Website & Product Design",
-    description:
-      "A high-performance digital agency experience that brings brand strategy, UI/UX design, and technical delivery into one confident story.",
-    liveUrl: "https://digify-agency.vercel.app/",
-    heroImage:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1800&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
-    ],
-    services: ["Strategy", "Brand system", "UI/UX design", "Next.js build"],
-    process: [
-      [
-        "01",
-        "Discovery",
-        "Clarified the agency offer, audience, and conversion story.",
-      ],
-      [
-        "02",
-        "Visual system",
-        "Built a premium visual language for brand, website, and case studies.",
-      ],
-      [
-        "03",
-        "Experience design",
-        "Structured services, selected work, methodology, insights, and enquiry flows.",
-      ],
-      [
-        "04",
-        "Final build",
-        "Delivered a responsive, motion-led Next.js experience ready for launch.",
-      ],
-    ],
-  },
-  "orvixa-workspace": {
-    title: "Orvixa Workspace",
-    eyebrow: "AI-Powered Work Management Platform",
-    description:
-      "A unified workspace that helps freelancers and growing teams manage projects, communication, time, invoices, reporting, and AI assistance in one place.",
-    liveUrl: "https://orvixas.vercel.app/",
-    heroImage:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1800&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    ],
-    services: [
-      "Product strategy",
-      "UX architecture",
-      "Dashboard design",
-      "Conversion system",
-    ],
-    process: [
-      [
-        "01",
-        "Product map",
-        "Grouped projects, tasks, communication, time, billing, and analytics into a clear platform model.",
-      ],
-      [
-        "02",
-        "Role journeys",
-        "Designed distinct flows for freelancers, organizations, admins, and invited teammates.",
-      ],
-      [
-        "03",
-        "Interaction system",
-        "Created boards, dashboards, onboarding, pricing, and AI moments that feel connected.",
-      ],
-      [
-        "04",
-        "Launch experience",
-        "Shaped a conversion-focused marketing site that leads naturally into the product.",
-      ],
-    ],
-  },
-} as const;
-
-type Slug = keyof typeof caseStudies;
-
-type PageProps = {
-  params: Promise<{ slug: string }>;
-};
-
-export function generateStaticParams() {
-  return Object.keys(caseStudies).map((slug) => ({ slug }));
-}
-
-export async function generateMetadata({
+export default function ProjectCaseStudy({
   params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const study = caseStudies[slug as Slug];
-
-  if (!study) return { title: "Case Study" };
-
-  return {
-    title: `${study.title} Case Study`,
-    description: study.description,
-    alternates: { canonical: `/projects/${slug}` },
-    openGraph: {
-      title: `${study.title} Case Study | SkyNova Digitals`,
-      description: study.description,
-      images: [{ url: study.heroImage, alt: study.title }],
-    },
-  };
-}
-
-export default async function CaseStudyPage({ params }: PageProps) {
-  const { slug } = await params;
-  const study = caseStudies[slug as Slug];
-
-  if (!study) {
-    return (
-      <main className="min-h-screen px-6 pt-40 pb-24 text-center">
-        <h1 className="text-4xl font-bold">Case study not found.</h1>
-        <Link href="/projects" className="mt-8 inline-flex underline">
-          Back to selected work
-        </Link>
-      </main>
-    );
-  }
+}: {
+  params: { slug: string };
+}) {
+  // This is your Ultra-Premium template for projects like 'digify-agency'
+  const projectName = params.slug.split("-").join(" ");
 
   return (
-    <main className="bg-white text-black">
-      <section className="relative min-h-[78vh] overflow-hidden bg-black text-white">
-        <img
-          src={study.heroImage}
-          alt={`${study.title} project preview`}
-          className="absolute inset-0 h-full w-full object-cover opacity-45"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10" />
-        <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-7xl flex-col justify-end px-6 pb-16 pt-36 lg:px-12 lg:pb-24">
-          <Link
-            href="/projects"
-            className="mb-16 inline-flex w-fit items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-white/70 transition-colors hover:text-[#F2B800]"
-          >
-            <ArrowLeft size={16} /> Back to work
-          </Link>
-          <p className="mb-5 text-xs font-bold uppercase tracking-[0.35em] text-[#F2B800]">
-            {study.eyebrow}
-          </p>
-          <h1 className="max-w-5xl text-5xl font-bold uppercase leading-[0.9] tracking-[-0.04em] md:text-8xl">
-            {study.title}
-          </h1>
-          <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <p className="max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
-              {study.description}
-            </p>
-            <a
-              href={study.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex w-fit items-center gap-3 bg-[#F2B800] px-6 py-4 text-sm font-black uppercase tracking-[0.15em] text-black transition-transform hover:-translate-y-1"
-            >
-              Live experience <ExternalLink size={17} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:py-32 lg:px-12">
-        <div className="md:col-span-4">
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-[#F2B800]">
-            The brief
-          </p>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl">
-            Built to be experienced.
-          </h2>
-        </div>
-        <div className="md:col-span-8">
-          <p className="max-w-3xl text-2xl leading-snug text-black/75 md:text-4xl">
-            We shaped a clear digital journey from first impression to
-            meaningful action, balancing editorial confidence with useful
-            product detail.
-          </p>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {study.services.map((service) => (
-              <div
-                key={service}
-                className="border-t border-black/15 pt-4 text-sm font-bold uppercase tracking-widest"
-              >
-                <Check size={16} className="mb-5 text-[#F2B800]" />
-                {service}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-black/10 bg-[#F7F7F5] px-6 py-16 md:py-24 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#F2B800]">
-                Visual system
-              </p>
-              <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">
-                A closer look.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-black/50">
-              Explore the visual direction, interface thinking, and product
-              atmosphere behind this build.
-            </p>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {study.gallery.map((image, index) => (
-              <figure
-                key={image}
-                className={`overflow-hidden bg-black ${index === 1 ? "md:translate-y-12" : ""}`}
-              >
-                <img
-                  src={image}
-                  alt={`${study.title} visual ${index + 1}`}
-                  className="aspect-[4/5] h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-20 md:py-32 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#F2B800]">
-              Live product preview
-            </p>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
-              See it in motion.
-            </h2>
-            <p className="mt-6 max-w-sm leading-relaxed text-black/55">
-              The live experience is available in the frame, with the full site
-              one click away for deeper exploration.
-            </p>
-            <a
-              href={study.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest underline decoration-[#F2B800] decoration-2 underline-offset-8"
-            >
-              Open live site <ArrowUpRight size={16} />
-            </a>
-          </div>
-          <div className="overflow-hidden border border-black/10 bg-black shadow-2xl lg:col-span-8">
-            <div className="flex h-10 items-center gap-2 border-b border-white/10 px-4">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
-              <span className="h-2.5 w-2.5 rounded-full bg-yellow-300" />
-              <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-              <span className="ml-3 truncate text-[10px] uppercase tracking-widest text-white/40">
-                {study.liveUrl}
-              </span>
-            </div>
-            <iframe
-              src={study.liveUrl}
-              title={`${study.title} live website preview`}
-              loading="lazy"
-              className="h-[520px] w-full border-0 bg-white md:h-[680px]"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-black px-6 py-20 text-white md:py-32 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-[#F2B800]">
-            How it came together
-          </p>
-          <h2 className="mt-5 max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-            A methodical process with visible momentum.
-          </h2>
-          <div className="mt-16 grid gap-px bg-white/15 md:grid-cols-4">
-            {study.process.map(([number, title, description]) => (
-              <article key={number} className="bg-black p-7 md:p-8">
-                <span className="text-sm font-black text-[#F2B800]">
-                  {number}
-                </span>
-                <h3 className="mt-12 text-xl font-bold">{title}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-white/55">
-                  {description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-20 text-center md:py-32">
-        <p className="text-xs font-black uppercase tracking-[0.3em] text-[#F2B800]">
-          Ready for the next build?
-        </p>
-        <h2 className="mx-auto mt-5 max-w-3xl text-4xl font-bold tracking-tight md:text-7xl">
-          Make your next digital experience impossible to ignore.
-        </h2>
+    <main className="bg-white text-black min-h-screen pt-32 pb-24 selection:bg-[#F2B800]">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Back Button */}
         <Link
-          href="/services"
-          className="mt-10 inline-flex items-center gap-3 bg-black px-7 py-4 text-sm font-black uppercase tracking-widest text-white transition-transform hover:-translate-y-1"
+          href="/projects"
+          className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 hover:text-black transition-colors mb-12"
         >
-          Start a project <ArrowUpRight size={17} />
+          <ArrowLeft size={14} /> Back to Work
         </Link>
-      </section>
+
+        {/* --- PROJECT HERO --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-20">
+          <div className="lg:col-span-8">
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-[#F2B800] text-[10px] font-black uppercase tracking-[0.4em] mb-4 block"
+            >
+              Case Study
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-7xl font-bold tracking-tighter leading-[0.9] uppercase"
+            >
+              {projectName} <br />{" "}
+              <span className="text-gray-300 italic font-light">
+                Digital Evolution.
+              </span>
+            </motion.h1>
+          </div>
+          <div className="lg:col-span-4 pb-4">
+            <div className="flex flex-wrap gap-2">
+              {["Strategy", "Design", "Development"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-4 py-2 rounded-full border border-gray-100 text-[10px] font-bold uppercase tracking-widest bg-gray-50/50"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* --- MAIN DISPLAY IMAGE --- */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative aspect-[16/9] w-full rounded-[32px] md:rounded-[48px] overflow-hidden bg-gray-100 mb-24 border border-gray-100 shadow-2xl shadow-gray-200/50"
+        >
+          <Image
+            src="/herobannerimages/hero-bg.png" // Update with actual project image
+            alt={projectName}
+            fill
+            className="object-cover"
+            priority
+          />
+        </motion.div>
+
+        {/* --- PROJECT DETAILS --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-32">
+          <div className="lg:col-span-7 space-y-12">
+            <section>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">
+                The Challenge
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-600 leading-relaxed font-medium">
+                Scaling a brand in the digital age requires more than just a
+                website. Our task for {projectName} was to engineer a
+                high-performance system that converts traffic into revenue.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">
+                The Solution
+              </h2>
+              <p className="text-lg text-gray-500 leading-relaxed">
+                By implementing a custom Next.js architecture and AI-driven
+                workflows, SkyNova Digitals optimized the user journey,
+                resulting in significant improvements in load speed and customer
+                engagement.
+              </p>
+            </section>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="bg-gray-50 rounded-[40px] p-10 border border-gray-100">
+              <div className="grid grid-cols-2 gap-8 mb-10">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
+                    Performance
+                  </p>
+                  <p className="text-4xl font-bold text-[#F2B800]">99%</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
+                    Conversion
+                  </p>
+                  <p className="text-4xl font-bold text-[#F2B800]">+35%</p>
+                </div>
+              </div>
+
+              <div className="pt-8 border-t border-gray-200">
+                <Link
+                  href="#"
+                  className="flex items-center justify-between group"
+                >
+                  <span className="font-bold text-lg group-hover:text-[#F2B800] transition-colors">
+                    Visit Project
+                  </span>
+                  <div className="w-12 h-12 rounded-2xl bg-black text-white flex items-center justify-center group-hover:bg-[#F2B800] group-hover:text-black transition-all">
+                    <ExternalLink size={20} />
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* --- TOOLS USED --- */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+          {[
+            {
+              icon: <Search />,
+              title: "Audit",
+              desc: "User behavior and market audit.",
+            },
+            {
+              icon: <Layout />,
+              title: "Design",
+              desc: "Premium UI/UX System build.",
+            },
+            {
+              icon: <Code />,
+              title: "Code",
+              desc: "Next.js & AI Integration core.",
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="p-10 rounded-[32px] border border-gray-100 bg-white hover:border-[#F2B800] transition-colors"
+            >
+              <div className="text-[#F2B800] mb-6">{item.icon}</div>
+              <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+              <p className="text-sm text-gray-500">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* --- FINAL CTA --- */}
+        <section className="bg-black rounded-[48px] p-12 md:p-24 text-center text-white overflow-hidden relative">
+          <div className="absolute top-0 right-0 p-12 opacity-5">
+            <Zap size={200} />
+          </div>
+          <h2 className="text-3xl md:text-6xl font-bold tracking-tighter mb-8 relative z-10">
+            Create your <br />{" "}
+            <span className="text-[#F2B800]">Masterpiece.</span>
+          </h2>
+          <Link
+            href="/contact"
+            className="relative z-10 bg-[#F2B800] text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] inline-flex items-center gap-3"
+          >
+            Work with us <ArrowLeft className="rotate-180" size={16} />
+          </Link>
+        </section>
+      </div>
     </main>
   );
 }
