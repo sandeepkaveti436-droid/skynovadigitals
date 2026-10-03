@@ -12,7 +12,13 @@ export const metadata: Metadata = {
     default: "SkyNova Digitals | Digital Transformation & Product Studio",
     template: "%s | SkyNova Digitals",
   },
-  description:
+  alternates: {
+    canonical: '/',
+  },
+   other: {
+    "fetchpriority": "high", // Tells Google this is the most important image
+  },
+    description:
     "SkyNova Digitals is a premier digital transformation studio specializing in SEO, web development, AI automation, and high-performance growth systems.",
   keywords: [
     "SkyNova Digitals",

@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import Image from "next/image";
 
 export default function Hero() {
   const brandYellow = "#F2B800";
@@ -24,7 +25,7 @@ export default function Hero() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.33, 1, 0.68, 1] as const,
+        ease: [0.33, 1, 0.68, 1],
         delay: i * 0.1,
       },
     }),
@@ -38,19 +39,36 @@ export default function Hero() {
       ref={containerRef}
       className="relative h-[110vh] w-full flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* --- BACKGROUND --- */}
+      {/* --- BACKGROUND OPTIMIZED FOR 100% PERFORMANCE --- */}
       <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
-        <div className="absolute inset-0 z-10 bg-black/20" />
-        <img
-          src="/herobannerimages/hero-bg.png"
-          alt="SkyNova"
-          className="h-full w-full object-cover object-center opacity-80 md:block hidden"
-        />
-        <img
-          src="/herobannerimages/mobile-bg.png"
-          alt="SkyNova"
-          className="h-full w-full object-cover object-[center_20%] opacity-80 block md:hidden"
-        />
+        {/* Desktop Image: Only loads on md screens and up */}
+        <div className="hidden md:block absolute inset-0">
+          <Image
+            src="/herobannerimages/hero-bg.png"
+            alt="SkyNova Digitals Desktop"
+            fill
+            priority
+            quality={80}
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Mobile Image: Only loads on small screens */}
+        <div className="block md:hidden absolute inset-0">
+          <Image
+            src="/herobannerimages/mobile-bg.png"
+            alt="SkyNova Digitals Mobile"
+            fill
+            priority
+            quality={80}
+            className="object-cover opacity-80"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Subtle Overlay to make text pop */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
       </motion.div>
 
       {/* --- CONTENT --- */}
@@ -61,19 +79,19 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-3 mb-8"
         >
-          <div className="w-12 h-[1px] bg-[#F2B800]" />
-          <span className="text-[10px] md:text-xs font-bold tracking-[0.5em] uppercase text-[#F2B800]">
+          <div className="w-8 md:w-12 h-[1px] bg-[#F2B800]" />
+          <span className="text-[9px] md:text-xs font-bold tracking-[0.4em] md:tracking-[0.5em] uppercase text-[#F2B800]">
             Digital Transformation Studio
           </span>
-          <div className="w-12 h-[1px] bg-[#F2B800]" />
+          <div className="w-8 md:w-12 h-[1px] bg-[#F2B800]" />
         </motion.div>
 
         {/* Headline with Split Animation */}
         <motion.h1
           style={{ opacity: opacityText }}
-          className="text-[12vw] md:text-[8vw] font-bold leading-[0.85] tracking-tighter uppercase text-white mb-12"
+          className="text-[14vw] md:text-[8vw] font-bold leading-[0.85] tracking-tighter uppercase text-white mb-10 md:mb-12"
         >
-          <span className="block overflow-hidden">
+          <span className="block overflow-hidden pb-1">
             {line1.split(" ").map((word, i) => (
               <motion.span
                 key={i}
@@ -106,26 +124,26 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* --- UPDATED BUTTON GROUP: Side by Side on Mobile --- */}
+        {/* --- BUTTON GROUP --- */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="flex flex-row items-center justify-center gap-2 md:gap-8 w-full"
+          className="flex flex-row items-center justify-center gap-3 md:gap-8 w-full"
         >
           {/* START A PROJECT BUTTON */}
-          <div className="flex items-center gap-1 md:gap-2 cursor-pointer group scale-[0.85] md:scale-100 origin-right md:origin-center">
-            <div className="bg-[#181C1A]/90 backdrop-blur-md px-4 md:px-10 py-3 rounded-[16px] border border-white/10 transition-all duration-300 group-hover:bg-[#F2B800] group-hover:border-[#F2B800]">
-              <span className="text-[11px] md:text-[14px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-white group-hover:text-black whitespace-nowrap">
+          <div className="flex items-center gap-1 md:gap-2 cursor-pointer group">
+            <div className="bg-[#181C1A]/90 backdrop-blur-md px-4 md:px-10 py-3 rounded-[14px] md:rounded-[16px] border border-white/10 transition-all duration-300 group-hover:bg-[#F2B800]">
+              <span className="text-[10px] md:text-[14px] font-bold uppercase tracking-widest text-white group-hover:text-black whitespace-nowrap">
                 Start a Project
               </span>
             </div>
             <div
-              className="w-[45px] md:w-[65px] h-[42px] rounded-[6px] rounded-tl-[25px] md:rounded-tl-[30px] rounded-br-[25px] md:rounded-br-[30px] flex items-center justify-center text-black relative transition-all duration-500"
+              className="w-[42px] md:w-[65px] h-[40px] md:h-[42px] rounded-[6px] rounded-tl-[25px] rounded-br-[25px] flex items-center justify-center text-black transition-all duration-500 shadow-lg shadow-[#F2B800]/20"
               style={{ backgroundColor: brandYellow }}
             >
               <ArrowRight
-                size={20}
+                size={18}
                 className="md:w-6 md:h-6"
                 strokeWidth={2.5}
               />
@@ -136,11 +154,11 @@ export default function Hero() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 md:gap-4 px-3 md:px-6 py-2 rounded-[18px] bg-black/40 backdrop-blur-md border border-white/10 text-white font-bold uppercase tracking-widest text-[9px] md:text-[11px] hover:bg-black/60 transition-all group scale-[0.85] md:scale-100 origin-left md:origin-center"
+            className="flex items-center gap-2 md:gap-4 px-3 md:px-6 py-2 rounded-[18px] bg-black/40 backdrop-blur-md border border-white/10 text-white font-bold uppercase tracking-widest text-[9px] md:text-[11px] group"
           >
-            <span className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#F2B800] group-hover:border-[#F2B800] group-hover:text-black transition-all duration-300">
+            <span className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#F2B800] group-hover:text-black transition-all">
               <Play
-                size={12}
+                size={10}
                 className="md:w-4 md:h-4 ml-0.5"
                 fill="currentColor"
               />
@@ -155,15 +173,15 @@ export default function Hero() {
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-6 left-12 z-30 hidden lg:block"
+        className="absolute bottom-10 left-12 z-30 hidden lg:block"
       >
-        <div className="bg-black/20 backdrop-blur-xl border border-white/10 p-5 rounded-[32px] max-sm shadow-2xl">
-          <p className="text-white/80 text-[15px] leading-[1.4] mb-6">
+        <div className="bg-black/20 backdrop-blur-xl border border-white/10 p-6 rounded-[32px] shadow-2xl">
+          <p className="text-white/80 text-[14px] leading-relaxed mb-6">
             <span style={{ color: brandYellow }} className="font-bold">
               SkyNova Digitals
             </span>{" "}
             is a high-performance studio <br /> creating websites and products
-            for <br /> businesses ready to stand out <br /> in the digital age.
+            for <br /> businesses ready to stand out.
           </p>
 
           <div className="flex items-center gap-4">
@@ -172,17 +190,16 @@ export default function Hero() {
                 <img
                   key={i}
                   src={url}
-                  className="w-10 h-10 rounded-full border-2 border-black object-cover shadow-lg"
-                  alt="avatar"
+                  className="w-10 h-10 rounded-full border-2 border-black object-cover"
+                  alt="Client"
                 />
               ))}
             </div>
-
             <div className="flex flex-col">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/90">
                 Trusted by 60+ Brands
               </span>
-              <div className="flex gap-0.5 mt-1">
+              <div className="flex gap-1 mt-1">
                 {[...Array(5)].map((_, i) => (
                   <div
                     key={i}
