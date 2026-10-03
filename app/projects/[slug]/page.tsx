@@ -23,23 +23,47 @@ const projectData: Record<
     efficiency: string;
     growth: string;
     tags: string[];
+    challenge: string;
+    solution: string;
   }
 > = {
   "digify-agency": {
     name: "Digify Agency",
     link: "https://digify-agency.vercel.app/",
-    image: "/herobannerimages/digify.png", // Make sure to add this image to your public folder
+    image: "/herobannerimages/digify.png",
     efficiency: "98%",
     growth: "+40%",
     tags: ["Digital Strategy", "Next.js", "Performance"],
+    challenge:
+      "The client needed a premium digital presence to unite brand strategy and technical delivery.",
+    solution:
+      "We built a high-performance Next.js site with a custom design system focused on conversion.",
   },
-  "orvixa-workspace": {
+  "orvixa-Dashboard": {
+    // Ensure this matches the SLUG in your projects list
     name: "Orvixa Workspace",
     link: "https://orvixas.vercel.app/",
     image: "/herobannerimages/orvix.png",
     efficiency: "95%",
     growth: "+25%",
     tags: ["SaaS", "Productivity", "UI/UX"],
+    challenge:
+      "Orvixa needed a unified work management platform for teams and freelancers.",
+    solution:
+      "Implemented an AI-powered dashboard with real-time billing and project tracking.",
+  },
+  // ADD THIS SECTION:
+  "hr-admin-intelligence": {
+    name: "HR Admin Intelligence",
+    link: "https://hradmin-staffmanagement.vercel.app/",
+    image: "/herobannerimages/hr-admin.png", // <--- Correct image path
+    efficiency: "92%",
+    growth: "+50%",
+    tags: ["Staff Management", "Enterprise", "AI"],
+    challenge:
+      "Manual staff management was slowing down growth and causing data errors.",
+    solution:
+      "We engineered an intelligent HR portal to automate staff scaling and performance tracking.",
   },
 };
 
