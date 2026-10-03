@@ -13,19 +13,17 @@ const projects = [
     name: "Digify Agency",
     category: "Web Design",
     year: "2026",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    image: "../../public/herobannerimages/digify.png",
     slug: "digify-agency",
     liveUrl: "https://digify-agency.vercel.app/",
   },
   {
     id: 6,
-    name: "Orvixa Workspace",
+    name: "Orvixa",
     category: "Product Design",
     year: "2026",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
-    slug: "orvixa-workspace",
+    image: "../../public/herobannerimages/orvixa.png",
+    slug: "orvixa-Dashboard",
     liveUrl: "https://orvixas.vercel.app/",
   },
   {
@@ -48,12 +46,12 @@ const projects = [
   },
   {
     id: 3,
-    name: "Orvixa Intelligence",
+    name: "Hr Admin Intelligence",
     category: "Development",
     year: "2023",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800",
-    slug: "orvixa",
+    slug: "hr-admin-intelligence",
   },
   {
     id: 4,

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -13,13 +13,53 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
+// 1. Define specific data for your projects
+const projectData: Record<
+  string,
+  {
+    name: string;
+    link: string;
+    image: string;
+    efficiency: string;
+    growth: string;
+    tags: string[];
+  }
+> = {
+  "digify-agency": {
+    name: "Digify Agency",
+    link: "https://digify-agency.vercel.app/",
+    image: "/herobannerimages/digify.png", // Make sure to add this image to your public folder
+    efficiency: "98%",
+    growth: "+40%",
+    tags: ["Digital Strategy", "Next.js", "Performance"],
+  },
+  "orvixa-workspace": {
+    name: "Orvixa Workspace",
+    link: "https://orvixas.vercel.app/",
+    image: "/herobannerimages/orvix.png",
+    efficiency: "95%",
+    growth: "+25%",
+    tags: ["SaaS", "Productivity", "UI/UX"],
+  },
+};
+
 export default function ProjectCaseStudy({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  // This is your Ultra-Premium template for projects like 'digify-agency'
-  const projectName = params.slug.split("-").join(" ");
+  const resolvedParams = use(params);
+  const slug = resolvedParams.slug;
+
+  // Get specific data or use fallback
+  const project = projectData[slug] || {
+    name: slug.split("-").join(" "),
+    link: "https://hradmin-staffmanagement.vercel.app/",
+    image: "/herobannerimages/hr-admin.png",
+    efficiency: "99%",
+    growth: "+35%",
+    tags: ["Strategy", "Design", "Development"],
+  };
 
   return (
     <main className="bg-white text-black min-h-screen pt-32 pb-24 selection:bg-[#F2B800]">
@@ -47,7 +87,7 @@ export default function ProjectCaseStudy({
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-7xl font-bold tracking-tighter leading-[0.9] uppercase"
             >
-              {projectName} <br />{" "}
+              {project.name} <br />{" "}
               <span className="text-gray-300 italic font-light">
                 Digital Evolution.
               </span>
@@ -55,7 +95,7 @@ export default function ProjectCaseStudy({
           </div>
           <div className="lg:col-span-4 pb-4">
             <div className="flex flex-wrap gap-2">
-              {["Strategy", "Design", "Development"].map((tag) => (
+              {project.tags.map((tag) => (
                 <span
                   key={tag}
                   className="px-4 py-2 rounded-full border border-gray-100 text-[10px] font-bold uppercase tracking-widest bg-gray-50/50"
@@ -67,7 +107,7 @@ export default function ProjectCaseStudy({
           </div>
         </div>
 
-        {/* --- MAIN DISPLAY IMAGE --- */}
+        {/* --- MAIN DISPLAY IMAGE (Now Dynamic) --- */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -75,10 +115,10 @@ export default function ProjectCaseStudy({
           className="relative aspect-[16/9] w-full rounded-[32px] md:rounded-[48px] overflow-hidden bg-gray-100 mb-24 border border-gray-100 shadow-2xl shadow-gray-200/50"
         >
           <Image
-            src="/herobannerimages/hero-bg.png" // Update with actual project image
-            alt={projectName}
+            src={project.image}
+            alt={project.name}
             fill
-            className="object-cover"
+            className="object-fill"
             priority
           />
         </motion.div>
@@ -92,7 +132,7 @@ export default function ProjectCaseStudy({
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 leading-relaxed font-medium">
                 Scaling a brand in the digital age requires more than just a
-                website. Our task for {projectName} was to engineer a
+                website. Our task for {project.name} was to engineer a
                 high-performance system that converts traffic into revenue.
               </p>
             </section>
@@ -117,19 +157,25 @@ export default function ProjectCaseStudy({
                   <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
                     Performance
                   </p>
-                  <p className="text-4xl font-bold text-[#F2B800]">99%</p>
+                  <p className="text-4xl font-bold text-[#F2B800]">
+                    {project.efficiency}
+                  </p>
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
                     Conversion
                   </p>
-                  <p className="text-4xl font-bold text-[#F2B800]">+35%</p>
+                  <p className="text-4xl font-bold text-[#F2B800]">
+                    {project.growth}
+                  </p>
                 </div>
               </div>
 
               <div className="pt-8 border-t border-gray-200">
-                <Link
-                  href="#"
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-between group"
                 >
                   <span className="font-bold text-lg group-hover:text-[#F2B800] transition-colors">
@@ -138,11 +184,13 @@ export default function ProjectCaseStudy({
                   <div className="w-12 h-12 rounded-2xl bg-black text-white flex items-center justify-center group-hover:bg-[#F2B800] group-hover:text-black transition-all">
                     <ExternalLink size={20} />
                   </div>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
         </div>
+
+        {/* ... Rest of your component (Tools & CTA) stays the same ... */}
 
         {/* --- TOOLS USED --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">

@@ -14,32 +14,29 @@ const projects = [
     category: "Brand, Web & UI/UX",
     description:
       "A premium digital agency experience uniting brand strategy, design, and technical delivery.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    image: "../../public/herobannerimages/digify.png",
     slug: "digify-agency",
     liveUrl: "https://digify-agency.vercel.app/",
   },
   {
     id: "02",
-    title: "Orvixa Workspace",
-    category: "AI Product Platform",
+    title: "Orvixa",
+    category: "Freelancer and Organization Management",
     description:
       "A unified work management platform for projects, teams, time, billing, and AI assistance.",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
-    slug: "orvixa-workspace",
+    image: "../../public/herobannerimages/orvixa.png",
+    slug: "orvixa-Dashboard",
     liveUrl: "https://orvixas.vercel.app/",
   },
   {
     id: "03",
-    title: "Orvixa Intelligence",
-    category: "SaaS / AI Product",
+    title: "Hr Admin Intelligence",
+    category: "Staff Management Platform",
     description:
       "A modern business platform designed to help teams scale effortlessly.",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800",
-    slug: "orvixa",
-    liveUrl: "https://orvixas.vercel.app/",
+    image: "../../public/herobannerimages/hr-admin-intelligence.png",
+    slug: "hr-admin-intelligence",
+    liveUrl: "https://hradmin-staffmanagement.vercel.app/",
   },
 ];
 
