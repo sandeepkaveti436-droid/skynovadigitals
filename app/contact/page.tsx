@@ -14,7 +14,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-// --- Fixed Custom Social Icons ---
+// --- Custom Social Icons ---
 const InstagramIcon = () => (
   <svg
     width="20"
@@ -31,7 +31,6 @@ const InstagramIcon = () => (
     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
   </svg>
 );
-
 const LinkedinIcon = () => (
   <svg
     width="20"
@@ -48,7 +47,6 @@ const LinkedinIcon = () => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
-
 const YoutubeIcon = () => (
   <svg
     width="20"
@@ -93,10 +91,33 @@ const reasons = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xppwvwkr", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      alert("Error submitting form. Check your connection.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -183,6 +204,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         required
+                        name="Full Name"
                         type="text"
                         placeholder="John Doe"
                         className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-black transition-colors text-sm text-black"
@@ -194,6 +216,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         required
+                        name="Email"
                         type="email"
                         placeholder="john@example.com"
                         className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-black transition-colors text-sm text-black"
@@ -201,7 +224,6 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* PROJECT TYPE DROPDOWN */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">
                       Project Type
@@ -209,16 +231,25 @@ export default function ContactPage() {
                     <div className="relative group">
                       <select
                         required
+                        name="Project Type"
                         defaultValue=""
                         className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-black transition-colors text-sm cursor-pointer appearance-none text-black pr-10"
                       >
                         <option value="" disabled>
                           Select a service
                         </option>
-                        <option value="web">Web Design & Development</option>
-                        <option value="ai">AI Automation Solutions</option>
-                        <option value="seo">Growth & SEO Strategy</option>
-                        <option value="design">UI/UX Product Design</option>
+                        <option value="Web Design & Development">
+                          Web Design & Development
+                        </option>
+                        <option value="AI Automation Solutions">
+                          AI Automation Solutions
+                        </option>
+                        <option value="Growth & SEO Strategy">
+                          Growth & SEO Strategy
+                        </option>
+                        <option value="UI/UX Product Design">
+                          UI/UX Product Design
+                        </option>
                       </select>
                       <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
                         <ChevronDown
@@ -234,6 +265,7 @@ export default function ContactPage() {
                       Your Vision
                     </label>
                     <textarea
+                      name="Vision/Message"
                       rows={4}
                       placeholder="Describe your project goals..."
                       className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-black transition-colors text-sm resize-none text-black"
@@ -241,11 +273,13 @@ export default function ContactPage() {
                   </div>
 
                   <motion.button
+                    disabled={loading}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
-                    className="w-full bg-black text-white py-5 rounded-2xl font-bold uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-3"
+                    className={`w-full bg-black text-white py-5 rounded-2xl font-bold uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-3 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
-                    Send Proposal <Send size={14} />
+                    {loading ? "Sending..." : "Send Proposal"}{" "}
+                    <Send size={14} />
                   </motion.button>
                 </form>
               )}
