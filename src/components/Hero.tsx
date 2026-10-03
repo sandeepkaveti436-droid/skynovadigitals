@@ -25,29 +25,36 @@ export default function Hero() {
       ref={containerRef}
       className="relative h-[110vh] w-full flex items-center justify-center overflow-hidden bg-black"
     >
+      {/* --- BACKGROUND OPTIMIZED --- */}
       <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
+        {/* Desktop Image */}
         <div className="hidden md:block absolute inset-0">
           <Image
             src="/herobannerimages/hero-bg.png"
-            alt="SkyNova Desktop"
+            alt="SkyNova Digitals Desktop"
             fill
             priority
             quality={80}
             className="object-cover"
-            sizes="100vw"
+            // Tells browser: On desktop (min-width 768) it's 100vw, otherwise ignore it
+            sizes="(min-width: 768px) 100vw, 1px"
           />
         </div>
+
+        {/* Mobile Image */}
         <div className="block md:hidden absolute inset-0">
           <Image
             src="/herobannerimages/mobile-bg.png"
-            alt="SkyNova Mobile"
+            alt="SkyNova Digitals Mobile"
             fill
             priority
             quality={80}
             className="object-cover opacity-80"
-            sizes="100vw"
+            // Tells browser: On mobile (max-width 768) it's 100vw, otherwise ignore it
+            sizes="(max-width: 768px) 100vw, 1px"
           />
         </div>
+
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
       </motion.div>
 

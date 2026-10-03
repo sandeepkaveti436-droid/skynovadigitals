@@ -14,7 +14,7 @@ const projects = [
     category: "Brand, Web & UI/UX",
     description:
       "A premium digital agency experience uniting brand strategy, design, and technical delivery.",
-    image: "../../public/herobannerimages/digify.png",
+    image: "/herobannerimages/digify.png",
     slug: "digify-agency",
     liveUrl: "https://digify-agency.vercel.app/",
   },
@@ -24,7 +24,7 @@ const projects = [
     category: "Freelancer and Organization Management",
     description:
       "A unified work management platform for projects, teams, time, billing, and AI assistance.",
-    image: "../../public/herobannerimages/orvixa.png",
+    image: "/herobannerimages/orvix.png",
     slug: "orvixa-Dashboard",
     liveUrl: "https://orvixas.vercel.app/",
   },
@@ -34,7 +34,7 @@ const projects = [
     category: "Staff Management Platform",
     description:
       "A modern business platform designed to help teams scale effortlessly.",
-    image: "../../public/herobannerimages/hr-admin-intelligence.png",
+    image: "/herobannerimages/hr-admin.png",
     slug: "hr-admin-intelligence",
     liveUrl: "https://hradmin-staffmanagement.vercel.app/",
   },

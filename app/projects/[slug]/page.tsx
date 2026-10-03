@@ -55,7 +55,7 @@ export default function ProjectCaseStudy({
   const project = projectData[slug] || {
     name: slug.split("-").join(" "),
     link: "https://hradmin-staffmanagement.vercel.app/",
-    image: "/herobannerimages/hr-admin.png",
+    image: "/herobannerimages/orvix.png",
     efficiency: "99%",
     growth: "+35%",
     tags: ["Strategy", "Design", "Development"],
