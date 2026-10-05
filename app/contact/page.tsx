@@ -31,6 +31,7 @@ const InstagramIcon = () => (
     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
   </svg>
 );
+
 const LinkedinIcon = () => (
   <svg
     width="20"
@@ -47,6 +48,7 @@ const LinkedinIcon = () => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
+
 const YoutubeIcon = () => (
   <svg
     width="20"
@@ -322,26 +324,34 @@ export default function ContactPage() {
                 Social Growth
               </h4>
               <div className="flex gap-4">
+                {/* Fixed Accessibility for Instagram */}
                 <a
                   href="https://www.instagram.com/skynovadigitals"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Follow SkyNova Digitals on Instagram"
                   className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#F2B800] transition-all"
                 >
                   <InstagramIcon />
                 </a>
+
+                {/* Fixed Accessibility for YouTube */}
                 <a
                   href="https://www.youtube.com/@skynovadigitals?sub_confirmation=1"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Subscribe to SkyNova Digitals on YouTube"
                   className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#F2B800] transition-all"
                 >
                   <YoutubeIcon />
                 </a>
+
+                {/* Added Accessibility for LinkedIn */}
                 <a
                   href="https://linkedin.com/company/skynovadigitals"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Connect with SkyNova Digitals on LinkedIn"
                   className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 hover:text-[#F2B800] transition-all"
                 >
                   <LinkedinIcon />

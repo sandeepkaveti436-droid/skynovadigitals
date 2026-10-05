@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // 1. Import usePathname
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
-// --- Custom Social Icons (Keep these as they are) ---
+// --- Custom Social Icons ---
 const InstagramIcon = () => (
   <svg
     width="18"
@@ -57,9 +57,8 @@ const TwitterIcon = () => (
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname(); // 2. Get current path
+  const pathname = usePathname();
 
-  // 3. Logic: If NOT on home page OR if scrolled, use the dark/opaque theme
   const isHomePage = pathname === "/";
   const useDarkTheme = isScrolled || !isHomePage;
 
@@ -73,9 +72,13 @@ export default function Navbar() {
   ];
 
   const socials = [
-    { icon: <InstagramIcon />, href: "https://instagram.com" },
-    { icon: <LinkedinIcon />, href: "https://linkedin.com" },
-    { icon: <TwitterIcon />, href: "https://twitter.com" },
+    {
+      icon: <InstagramIcon />,
+      href: "https://instagram.com",
+      label: "Instagram",
+    },
+    { icon: <LinkedinIcon />, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: <TwitterIcon />, href: "https://twitter.com", label: "Twitter" },
   ];
 
   useEffect(() => {
@@ -91,24 +94,27 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-6 md:py-8 flex justify-between items-center md:items-start pointer-events-none">
-        {/* --- MOBILE: COMBINED PILL --- */}
         <motion.div
           animate={{
             backgroundColor:
-              useDarkTheme || isMobileMenuOpen
+              isScrolled || isMobileMenuOpen
                 ? "rgba(255, 255, 255, 0.98)"
                 : "rgba(255, 255, 255, 0.08)",
             border:
-              useDarkTheme || isMobileMenuOpen
+              isScrolled || isMobileMenuOpen
                 ? "1px solid rgba(0,0,0,0.1)"
                 : "1px solid rgba(255,255,255,0.1)",
           }}
           className="md:hidden flex justify-between items-center w-full pointer-events-auto px-4 py-2.5 rounded-2xl backdrop-blur-xl transition-all duration-500"
         >
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo/LOGO.png" alt="SND" className="h-8 w-auto" />
+            <img src="/logo/LOGO.png" alt="SND Logo" className="h-8 w-auto" />
           </Link>
+
+          {/* FIXED: Added Role and Aria-Label for Accessibility */}
           <div
+            role="button"
+            aria-label="Toggle Menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="flex flex-col gap-1.5 cursor-pointer p-2"
           >
@@ -133,7 +139,7 @@ export default function Navbar() {
           </div>
         </motion.div>
 
-        {/* --- DESKTOP: LOGO PILL --- */}
+        {/* ... Desktop Nav remains the same ... */}
         <motion.div
           animate={{
             backgroundColor: useDarkTheme
@@ -146,7 +152,7 @@ export default function Navbar() {
           className="hidden md:flex pointer-events-auto px-4 py-2.5 rounded-2xl items-center gap-3 backdrop-blur-md transition-all duration-500"
         >
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo/LOGO.png" alt="SND" className="h-9 w-auto" />
+            <img src="/logo/LOGO.png" alt="SND Logo" className="h-9 w-auto" />
             <span
               className={`text-sm font-black tracking-tighter uppercase transition-colors ${useDarkTheme ? "text-black" : "text-[#F2B800]"}`}
             >
@@ -155,7 +161,6 @@ export default function Navbar() {
           </Link>
         </motion.div>
 
-        {/* --- DESKTOP: NAV LINKS PILL --- */}
         <motion.div
           animate={{
             backgroundColor: useDarkTheme
@@ -171,29 +176,21 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className={`px-5 py-2 text-[12px] font-medium uppercase tracking-widest transition-colors ${
-                useDarkTheme
-                  ? "text-black/50 hover:text-black"
-                  : "text-white/50 hover:text-[#F2B800]"
-              }`}
+              className={`px-5 py-2 text-[12px] font-medium uppercase tracking-widest transition-colors ${useDarkTheme ? "text-black/50 hover:text-black" : "text-white/50 hover:text-[#F2B800]"}`}
             >
               {link.name}
             </Link>
           ))}
           <Link
             href="/contact"
-            className={`px-6 py-2 text-[12px] font-medium uppercase tracking-widest rounded-[14px] shadow-xl transition-all ${
-              useDarkTheme
-                ? "bg-[#F2B800] text-black hover:bg-black hover:text-white"
-                : "bg-[#F2B800] text-black hover:bg-white"
-            }`}
+            className={`px-6 py-2 text-[12px] font-medium uppercase tracking-widest rounded-[14px] shadow-xl transition-all ${useDarkTheme ? "bg-[#F2B800] text-black hover:bg-[#F2B800] hover:text-black" : "bg-[#F2B800] text-black hover:bg-white"}`}
           >
             Work With Us
           </Link>
         </motion.div>
       </nav>
 
-      {/* --- MOBILE OVERLAY (Keep existing code) --- */}
+      {/* --- MOBILE OVERLAY --- */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -249,6 +246,7 @@ export default function Navbar() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={social.label}
                     className="w-12 h-12 rounded-[18px] border border-black/5 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all"
                   >
                     {social.icon}
