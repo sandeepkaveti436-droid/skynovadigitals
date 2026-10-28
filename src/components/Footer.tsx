@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-// --- Fixed Custom Social Icons (Stable SVGs) ---
+// --- Custom Social SVG Icons ---
 const InstagramIcon = () => (
   <svg
-    width="20"
-    height="20"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -21,10 +22,11 @@ const InstagramIcon = () => (
     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
   </svg>
 );
+
 const LinkedinIcon = () => (
   <svg
-    width="20"
-    height="20"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -37,10 +39,11 @@ const LinkedinIcon = () => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
+
 const YoutubeIcon = () => (
   <svg
-    width="20"
-    height="20"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -55,10 +58,11 @@ const YoutubeIcon = () => (
     />
   </svg>
 );
+
 const TwitterIcon = () => (
   <svg
-    width="18"
-    height="18"
+    width="17"
+    height="17"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -70,18 +74,19 @@ const TwitterIcon = () => (
   </svg>
 );
 
+// --- Rolling Text Link Animation ---
 const RollingLink = ({ title, href }: { title: string; href: string }) => {
   return (
-    <Link href={href} className="group relative block overflow-hidden h-8">
+    <Link href={href} className="group relative block overflow-hidden h-7">
       <motion.div
-        whileHover={{ y: -32 }}
-        transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-        className="flex flex-col items-center md:items-start"
+        whileHover={{ y: -28 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col items-start"
       >
-        <span className="text-[12px] md:text-sm font-medium text-white/40 uppercase tracking-wider h-8 flex items-center group-hover:text-[#F0B400] transition-colors whitespace-nowrap">
+        <span className="text-xs md:text-[13px] font-medium text-neutral-400 uppercase tracking-wider h-7 flex items-center group-hover:text-[#F2B800] transition-colors whitespace-nowrap">
           {title}
         </span>
-        <span className="text-[12px] md:text-sm font-medium text-white uppercase tracking-wider h-8 flex items-center whitespace-nowrap">
+        <span className="text-xs md:text-[13px] font-bold text-white uppercase tracking-wider h-7 flex items-center whitespace-nowrap">
           {title}
         </span>
       </motion.div>
@@ -91,14 +96,16 @@ const RollingLink = ({ title, href }: { title: string; href: string }) => {
 
 export default function Footer() {
   const [time, setTime] = useState("");
+  const [currentYear, setCurrentYear] = useState(2025);
 
   useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
     const updateTime = () => {
       const now = new Date();
       setTime(
         now.toLocaleTimeString("en-IN", {
           timeZone: "Asia/Kolkata",
-          hour12: true, // 12-hour format
+          hour12: true,
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -119,9 +126,9 @@ export default function Footer() {
     ],
     services: [
       { name: "Digital Experiences", href: "/services" },
-      { name: "UI/UX Design", href: "/services" },
-      { name: "Development", href: "/services" },
-      { name: "AI Automation", href: "/services" },
+      { name: "UI/UX Design Systems", href: "/services" },
+      { name: "Next.js Development", href: "/services" },
+      { name: "Growth & CRO", href: "/services" },
     ],
   };
 
@@ -149,43 +156,79 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#050505] pt-20 pb-10 px-6 border-t border-white/5 relative overflow-hidden">
-      {/* --- BACKGROUND WATERMARK --- */}
-      <div className="absolute bottom-[-2%] left-1/2 -translate-x-1/2 pointer-events-none opacity-[0.02] select-none whitespace-nowrap">
+    <footer className="relative bg-[#050505] text-white pt-24 pb-12 px-6 border-t border-white/10 overflow-hidden">
+      {/* ================= 1. ANIMATED BLURRED VIDEO BACKGROUND ================= */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover scale-110 filter blur-[32px] opacity-25"
+        >
+          <source
+            src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-dark-water-41554-large.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        {/* Dark Tint & Frost Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/85 to-[#050505]/70 backdrop-blur-md" />
+
+        {/* Ambient Gold Radial Flare */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[radial-gradient(circle,_rgba(242,184,0,0.12)_0%,_transparent_70%)] blur-3xl" />
+      </div>
+
+      {/* ================= 2. BACKGROUND WATERMARK TYPOGRAPHY ================= */}
+      <div className="absolute bottom-[-2vw] left-1/2 -translate-x-1/2 pointer-events-none opacity-[0.025] select-none whitespace-nowrap z-0">
         <h2 className="text-[22vw] font-black uppercase tracking-tighter text-white">
           SkyNova
         </h2>
       </div>
 
+      {/* ================= 3. MAIN FOOTER CONTENT ================= */}
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20 md:mb-24">
+          {/* Brand Column with Your Exact Logo Restored */}
           <div className="lg:col-span-6 flex flex-col items-center text-center md:items-start md:text-left">
-            <div className="flex items-center gap-3 mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-3 mb-6 group"
+            >
               <img
                 src="/logo/LOGO.png"
                 alt="SkyNova Logo"
-                className="h-7 md:h-8 w-auto"
+                className="h-7 md:h-8 w-auto object-contain"
               />
-              <span className="text-xl font-black tracking-tighter text-white uppercase">
-                SkyNova<span className="text-[#F0B400]">Digitals</span>
+              <span className="text-xl font-black tracking-tight text-white uppercase">
+                SkyNova<span className="text-[#F2B800]">Digitals</span>
               </span>
-            </div>
-            <p className="text-lg md:text-2xl text-white/60 font-medium leading-snug max-w-sm mb-10">
-              Designing digital experiences that move businesses forward.
+            </Link>
+
+            <p className="text-base md:text-xl text-neutral-400 font-light leading-relaxed max-w-sm mb-10">
+              Architecting bespoke digital products and Next.js platforms
+              designed to move enterprise brands forward.
             </p>
 
-            <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-12">
+            {/* Live Clock & Studio Location */}
+            <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-10 p-4 rounded-xl bg-white/[0.02] border border-white/10 backdrop-blur-sm">
               <div className="flex flex-col">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F0B400] mb-2">
+                <span className="text-[12px] font-mono font-medium uppercase tracking-[0.25em] text-[#F2B800] mb-1.5 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F2B800] animate-pulse" />
                   Local Time (IST)
                 </span>
-                <span className="text-xl font-mono text-white/80 uppercase">
-                  {time} <span className="text-xs opacity-40 ml-1">HYD</span>
+                <span className="text-lg font-mono text-white tracking-tight">
+                  {time || "06:30 PM"}{" "}
+                  <span className="text-xs text-neutral-500 font-sans ml-1">
+                    HYD
+                  </span>
                 </span>
               </div>
-              <div className="w-[1px] h-10 bg-white/10 hidden sm:block" />
+
+              <div className="w-[1px] h-8 bg-white/10 hidden sm:block" />
+
               <div className="flex flex-col">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">
+                <span className="text-[12px] font-mono font-bold uppercase tracking-[0.25em] text-neutral-400 mb-1.5">
                   Studio Location
                 </span>
                 <span className="text-xs font-bold text-white uppercase tracking-widest">
@@ -195,13 +238,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* --- LINKS GRID --- */}
-          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-4">
-            <div className="space-y-6 text-center md:text-left">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">
+          {/* Links & Socials */}
+          <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            <div className="space-y-5">
+              <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-white">
                 Explore
               </h4>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {footerLinks.explore.map((link) => (
                   <RollingLink
                     key={link.name}
@@ -211,11 +254,12 @@ export default function Footer() {
                 ))}
               </div>
             </div>
-            <div className="space-y-6 text-center md:text-left">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">
-                Services
+
+            <div className="space-y-5">
+              <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-white">
+                Capabilities
               </h4>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {footerLinks.services.map((link) => (
                   <RollingLink
                     key={link.name}
@@ -225,19 +269,20 @@ export default function Footer() {
                 ))}
               </div>
             </div>
-            <div className="space-y-6 col-span-2 md:col-span-1 text-center md:text-left">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">
-                Connect
+
+            <div className="space-y-5 col-span-2 sm:col-span-1">
+              <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-white">
+                Network
               </h4>
-              <div className="flex flex-row flex-wrap justify-center md:justify-start gap-3">
+              <div className="flex flex-row flex-wrap gap-2.5">
                 {socials.map((social, i) => (
                   <a
                     key={i}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={social.label} // Fixes Accessibility Error
-                    className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#F2B800] hover:border-[#F2B800] transition-all"
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-lg bg-neutral-900/80 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-black hover:bg-[#F2B800] hover:border-[#F2B800] transition-all duration-300 shadow-sm"
                   >
                     {social.icon}
                   </a>
@@ -247,28 +292,33 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* --- BOTTOM BAR --- */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center md:items-end gap-12 text-center md:text-left">
-          <div className="group cursor-pointer flex flex-col items-center md:items-start">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F0B400] mb-2">
-              Business Email
-            </p>
+        {/* Bottom Bar */}
+        <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+          <div className="group flex flex-col items-center md:items-start">
+            <span className="text-[12px] font-mono uppercase tracking-[0.25em] text-[#F2B800] font-bold mb-1.5 flex items-center gap-1.5">
+              Direct Senior Partner Inquiries
+            </span>
             <a
               href="mailto:skynovadigitals@gmail.com"
-              className="text-xl sm:text-2xl md:text-3xl font-bold text-white border-b border-white/10 group-hover:border-[#F0B400] transition-all duration-500"
+              className="text-lg sm:text-2xl font-bold text-white hover:text-[#F2B800] transition-colors duration-300 inline-flex items-center gap-2 group"
             >
-              skynovadigitals@gmail.com
+              <span>skynovadigitals@gmail.com</span>
+              <ArrowUpRight
+                size={18}
+                className="text-neutral-500 group-hover:text-[#F2B800] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+              />
             </a>
           </div>
 
-          <div className="flex flex-col items-center md:items-end space-y-6">
-            <div className="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-white/40">
+          <div className="flex flex-col items-center md:items-end space-y-3">
+            <div className="flex gap-6 text-[12px]  font-medium uppercase text-neutral-400">
               <Link
                 href="/privacy"
                 className="hover:text-white transition-colors"
               >
                 Privacy Policy
               </Link>
+              <span className="text-neutral-600">•</span>
               <Link
                 href="/terms"
                 className="hover:text-white transition-colors"
@@ -276,9 +326,9 @@ export default function Footer() {
                 Terms of Service
               </Link>
             </div>
-            <p className="text-[9px] font-medium text-white/80 uppercase tracking-[0.3em] leading-relaxed">
-              © 2024 SkyNova Digitals. All rights reserved. <br />
-              Creating digital experiences in Hyderabad, India.
+
+            <p className="text-[12px] font-mono text-neutral-500 uppercase tracking-widest leading-relaxed">
+              © {2025} SkyNova Digitals. Crafted for the Modern Web.
             </p>
           </div>
         </div>

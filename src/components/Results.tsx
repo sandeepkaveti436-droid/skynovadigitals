@@ -1,140 +1,368 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useInView,
-} from "framer-motion";
-import { revealCardVariants } from "@/src/components/ui/RevealCard";
-import RevealHeading from "@/src/components/ui/RevealHeading";
+import React, { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { ArrowUpRight, Activity } from "lucide-react";
 
-// --- HIGH-END COUNTER COMPONENT ---
-const AnimatedMetric = ({
-  value,
-  suffix,
-  decimals = 0,
+// --- 1. INDEPENDENT ROLLING DIGIT (CHARACTER-BY-CHARACTER) ---
+const RollingDigit = ({
+  digit,
+  delay,
+  isInView,
 }: {
-  value: number;
-  suffix: string;
-  decimals?: number;
+  digit: number;
+  delay: number;
+  isInView: boolean;
 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const count = useMotionValue(0);
-  const springValue = useSpring(count, { stiffness: 40, damping: 20 });
-  const displayValue = useTransform(springValue, (latest) =>
-    latest.toFixed(decimals),
-  );
-
-  useEffect(() => {
-    if (isInView) count.set(value);
-  }, [isInView, value, count]);
-
   return (
-    // Added justify-center for mobile centering
-    <span
-      ref={ref}
-      className="flex items-baseline justify-center md:justify-start"
-    >
-      <motion.span className="text-black">{displayValue}</motion.span>
-      <span className="text-[#F2B800] ml-1 font-bold">{suffix}</span>
+    <span className="inline-block h-[1.08em] overflow-hidden leading-none relative">
+      <motion.span
+        initial={{ y: "0%" }}
+        animate={isInView ? { y: `-${digit * 10}%` } : { y: "0%" }}
+        transition={{
+          duration: 1.6,
+          delay,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="inline-flex flex-col"
+      >
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+          <span
+            key={num}
+            className="h-[1.08em] flex items-center justify-center leading-none select-none"
+          >
+            {num}
+          </span>
+        ))}
+      </motion.span>
     </span>
   );
 };
 
-const results = [
+// --- 2. MULTI-CHARACTER NUMBER TICKER ---
+const CharacterAnimatedNumber = ({
+  value,
+  suffix,
+  isInView,
+}: {
+  value: number;
+  suffix: string;
+  isInView: boolean;
+}) => {
+  const digits = String(value).split("");
+
+  return (
+    <span className="inline-flex items-baseline leading-none">
+      {/* Individual Digits */}
+      {digits.map((char, i) => (
+        <RollingDigit
+          key={i}
+          digit={parseInt(char, 10)}
+          delay={0.15 + i * 0.12}
+          isInView={isInView}
+        />
+      ))}
+
+      {/* Suffix Animated Character */}
+      <span className="inline-block overflow-hidden leading-none ml-1">
+        <motion.span
+          initial={{ y: "100%", opacity: 0 }}
+          animate={
+            isInView ? { y: "0%", opacity: 1 } : { y: "100%", opacity: 0 }
+          }
+          transition={{
+            duration: 0.8,
+            delay: 0.15 + digits.length * 0.12,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="inline-block text-[#F2B800] font-bold"
+        >
+          {suffix}
+        </motion.span>
+      </span>
+    </span>
+  );
+};
+
+// --- 3. CHARACTER-BY-CHARACTER WORD TEXT ANIMATION ---
+const AnimatedCharacterWord = ({
+  text,
+  className = "",
+  delayOffset = 0,
+}: {
+  text: string;
+  className?: string;
+  delayOffset?: number;
+}) => {
+  return (
+    <span className={`inline-flex ${className}`}>
+      {text.split("").map((char, index) => (
+        <span
+          key={index}
+          className="inline-block overflow-hidden py-1 leading-[1.1]"
+        >
+          <motion.span
+            initial={{ y: "120%", opacity: 0, rotateZ: 3 }}
+            animate={{ y: "0%", opacity: 1, rotateZ: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: delayOffset + index * 0.03,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="inline-block"
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+};
+
+const metrics = [
   {
+    id: "01",
+    tag: "CONVERSION",
     value: 45,
     suffix: "%",
-    label: "Engagement improvement",
-    sub: "Calculated across healthcare & fintech portals.",
+    label: "Engagement Lift",
+    context: "Calculated across mission-critical healthcare & fintech portals.",
+    highlight: "+12.4% MoM Avg",
   },
   {
+    id: "02",
+    tag: "EFFICIENCY",
     value: 3,
     suffix: "×",
-    label: "Faster user journey",
-    sub: "Optimization of core conversion funnels.",
+    label: "Faster Journey",
+    context: "Frictionless checkout and behavioral conversion funnels.",
+    highlight: "Sub-Second TTFB",
   },
   {
+    id: "03",
+    tag: "VELOCITY",
     value: 25,
     suffix: "+",
-    label: "Digital screens designed",
-    sub: "Average per high-fidelity product sprint.",
+    label: "Screens Shipped",
+    context: "Average per modular high-fidelity product design sprint.",
+    highlight: "Production Ready",
   },
   {
+    id: "04",
+    tag: "VERSATILITY",
     value: 10,
     suffix: "+",
-    label: "Industries explored",
-    sub: "From SaaS infrastructure to wellness.",
+    label: "Industries Scaled",
+    context: "From edge SaaS infrastructure to consumer wellness apps.",
+    highlight: "Global Reach",
   },
 ];
 
+// --- 4. INDIVIDUAL METRIC CARD WITH DYNAMIC HOVER ---
+const MetricCard = ({
+  item,
+  index,
+}: {
+  item: (typeof metrics)[0];
+  index: number;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-60px" });
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`relative p-8 md:p-10 flex flex-col justify-between min-h-[330px] cursor-pointer overflow-hidden transition-colors duration-400 select-none ${
+        isHovered ? "bg-[#0a0a0a]" : "bg-white"
+      }`}
+    >
+      {/* Top Animated Gold Accent Bar on Hover */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="absolute top-0 left-0 right-0 h-[3px] bg-[#F2B800] origin-left z-10"
+      />
+
+      {/* Top Metadata */}
+      <div className="flex items-center justify-between mb-8 z-10 w-full">
+        <motion.span
+          animate={{ color: isHovered ? "#ffffff" : "#a3a3a3" }}
+          transition={{ duration: 0.25 }}
+          className="text-[11px] font-mono font-semibold"
+        >
+          ({item.id} // {item.tag})
+        </motion.span>
+        <motion.div
+          animate={{
+            backgroundColor: isHovered ? "#F2B800" : "#d4d4d4",
+            scale: isHovered ? 1.25 : 1,
+          }}
+          transition={{ duration: 0.25 }}
+          className="w-1.5 h-1.5 rounded-full"
+        />
+      </div>
+
+      {/* Metric Characters & Label: Centered on Mobile, Left-aligned on sm+ */}
+      <div className="my-auto z-10 w-full text-center sm:text-left">
+        <div className="text-[52px] md:text-[68px] font-black tracking-tighter leading-none mb-3 flex items-baseline justify-center sm:justify-start">
+          <motion.div
+            animate={{ color: isHovered ? "#F2B800" : "#0a0a0a" }}
+            transition={{ duration: 0.25 }}
+          >
+            <CharacterAnimatedNumber
+              value={item.value}
+              suffix={item.suffix}
+              isInView={isInView}
+            />
+          </motion.div>
+        </div>
+
+        {/* Text Label: Centered on Mobile */}
+        <motion.h3
+          animate={{ color: isHovered ? "#ffffff" : "#0a0a0a" }}
+          transition={{ duration: 0.25 }}
+          className="text-sm font-bold uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5"
+        >
+          <span>{item.label}</span>
+          <motion.div
+            animate={{
+              x: isHovered ? 2 : 0,
+              y: isHovered ? -2 : 0,
+              color: isHovered ? "#F2B800" : "#a3a3a3",
+            }}
+            transition={{ duration: 0.25 }}
+          >
+            <ArrowUpRight size={14} />
+          </motion.div>
+        </motion.h3>
+      </div>
+
+      {/* Context Description & Highlight Pill: Centered on Mobile */}
+      <motion.div
+        animate={{
+          borderTopColor: isHovered ? "rgba(255,255,255,0.12)" : "#e5e5e5",
+        }}
+        transition={{ duration: 0.25 }}
+        className="pt-6 mt-6 border-t z-10 w-full text-center sm:text-left"
+      >
+        <motion.p
+          animate={{
+            color: isHovered ? "rgba(255,255,255,0.85)" : "#737373",
+          }}
+          transition={{ duration: 0.25 }}
+          className="text-xs leading-relaxed mb-3 font-normal text-center sm:text-left"
+        >
+          {item.context}
+        </motion.p>
+
+        {/* Highlight Badge Pill Container Centered on Mobile */}
+        <div className="flex justify-center sm:justify-start">
+          <motion.span
+            animate={{
+              backgroundColor: isHovered ? "rgba(255,255,255,0.12)" : "#f5f5f5",
+              borderColor: isHovered ? "rgba(255,255,255,0.2)" : "#e5e5e5",
+              color: isHovered ? "#ffffff" : "#525252",
+            }}
+            transition={{ duration: 0.25 }}
+            className="inline-block text-[10px] font-mono uppercase tracking-wider font-semibold px-2 py-0.5 rounded border"
+          >
+            {item.highlight}
+          </motion.span>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export default function Results() {
   return (
-    <section className="bg-white py-16 md:py-48 px-6 border-y border-zinc-100">
-      <div className="max-w-7xl mx-auto">
-        {/* --- HEADER: Centered on mobile --- */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-20 md:mb-24 gap-8">
-          <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
-              <div className="w-10 h-[1px] bg-zinc-200" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">
+    <section className="bg-white text-neutral-900 py-14 md:py-32 px-6 border-t border-neutral-200 relative overflow-hidden">
+      {/* Ambient Glow */}
+      <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_rgba(242,184,0,0.06),transparent_70%)] blur-3xl" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* ================= 1. HEADER: CENTERED ON MOBILE, MIDDLE-ALIGNED ON DESKTOP ================= */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-14 md:mb-20 pb-8 border-b border-neutral-200">
+          {/* Left: Eyebrow + Character-Animated Headline (Centered on mobile) */}
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+            <div className="inline-flex items-center gap-2 mb-3.5 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F2B800] animate-pulse" />
+              <span className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-neutral-800">
                 Measurable Impact
               </span>
-              <div className="w-10 h-[1px] bg-zinc-200 md:hidden" />
             </div>
-            <RevealHeading
-              text="Designed for impact."
-              className="text-[32px] md:text-[64px] font-bold tracking-tighter text-black leading-none"
-            />
+
+            {/* SINGLE LINE: CHARACTER-BY-CHARACTER ANIMATION (Flex-centered on mobile) */}
+            <h2 className="text-[clamp(1.5rem,3.8vw,3.5rem)] leading-none tracking-tight flex flex-wrap sm:flex-nowrap justify-center lg:justify-start items-baseline gap-2 md:gap-3">
+              <AnimatedCharacterWord
+                text="Proven Results."
+                className="font-black uppercase tracking-tight text-neutral-950 font-sans"
+                delayOffset={0.05}
+              />
+              <AnimatedCharacterWord
+                text="by the"
+                className="font-serif italic font-light text-neutral-500 lowercase text-[0.95em]"
+                delayOffset={0.4}
+              />
+              <span
+                style={{ fontFamily: "'TheSeasonsItalic', Georgia, serif" }}
+                className="font-normal italic text-[#F2B800] tracking-normal inline-block"
+              >
+                <AnimatedCharacterWord
+                  text="Numbers."
+                  className="font-normal italic text-[#F2B800] tracking-normal"
+                  delayOffset={0.65}
+                />
+              </span>
+            </h2>
           </div>
-          <div className="max-w-[300px] text-center md:text-left">
-            <p className="text-zinc-500 text-sm font-medium leading-relaxed">
-              We don&apos;t chase vanity metrics. We focus on the data that
-              moves your business needle forward.
+
+          {/* Right: Description (Centered on mobile, border-left on desktop) */}
+          <div className="max-w-md lg:border-l lg:border-neutral-200 lg:pl-8 flex items-center justify-center lg:justify-start text-center lg:text-left w-full">
+            <p className="text-neutral-500 text-xs md:text-sm leading-relaxed font-normal">
+              We don&apos;t chase vanity metrics or superficial traffic. We
+              engineer resilient digital platforms designed to accelerate your
+              revenue and compound enterprise valuation.
             </p>
           </div>
         </div>
 
-        {/* --- DATA GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
-          {results.map((item, index) => (
-            <motion.div
-              key={index}
-              custom={index}
-              variants={revealCardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="bg-white p-10 md:p-12 flex flex-col items-center md:items-stretch justify-between group hover:bg-zinc-50 transition-colors duration-500 min-h-[300px] md:min-h-[320px]"
-            >
-              {/* Technical Indicator - Spaced on top, but centered content below */}
-              <div className="w-full flex justify-between items-start mb-8">
-                <div className="w-1.5 h-1.5 rounded-full bg-zinc-200 group-hover:bg-[#F2B800] transition-colors" />
-                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">
-                  Metrics_v2.0
+        {/* ================= 2. ARCHITECTURAL MATRIX ================= */}
+        <div className="p-1">
+          <div className="relative bg-neutral-200 border border-neutral-300">
+            {/* 4 Precision Viewfinder Corner Crosshairs */}
+            <span className="absolute -top-[4px] -left-[4px] w-4 h-4 border-t-2 border-l-2 border-neutral-900 z-20" />
+            <span className="absolute -top-[4px] -right-[4px] w-4 h-4 border-t-2 border-r-2 border-neutral-900 z-20" />
+            <span className="absolute -bottom-[4px] -left-[4px] w-4 h-4 border-b-2 border-l-2 border-neutral-900 z-20" />
+            <span className="absolute -bottom-[4px] -right-[4px] w-4 h-4 border-b-2 border-r-2 border-neutral-900 z-20" />
+
+            {/* 4 Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px]">
+              {metrics.map((item, index) => (
+                <MetricCard key={item.id} item={item} index={index} />
+              ))}
+            </div>
+
+            {/* Bottom Verification Bar: Centered on mobile */}
+            <div className="px-6 py-3.5 bg-neutral-100 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 text-[11px] font-mono text-neutral-500 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <Activity size={13} className="text-[#F2B800] shrink-0" />
+                <span>
+                  BENCHMARK DATA COMPILED ACROSS 40+ NEXT.JS DEPLOYMENTS
                 </span>
               </div>
-
-              {/* The Number & Label: Centered on mobile */}
-              <div className="text-center md:text-left">
-                <div className="text-[48px] md:text-[64px] font-bold text-black tracking-tighter mb-2 flex items-baseline justify-center md:justify-start leading-none">
-                  <AnimatedMetric value={item.value} suffix={item.suffix} />
-                </div>
-                <h3 className="text-[12px] md:text-sm font-bold text-black mb-4 uppercase tracking-widest">
-                  {item.label}
-                </h3>
-              </div>
-
-              {/* Sub-context: Centered on mobile */}
-              <p className="text-zinc-400 text-xs font-medium leading-relaxed text-center md:text-left">
-                {item.sub}
-              </p>
-            </motion.div>
-          ))}
+              <span className="text-neutral-400 uppercase tracking-widest text-[10px]">
+                AUDITED QUARTERLY // ZERO ESTIMATES
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

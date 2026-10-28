@@ -58,14 +58,14 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
       </motion.div>
 
-      <div className="relative z-20 w-full max-w-[1400px] px-4 flex flex-col items-center text-center">
+      <div className="relative z-20 w-full max-w-[1400px] px-4 mt-38 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-3 mb-8"
         >
           <div className="w-8 h-[1px] bg-[#F2B800]" />
-          <span className="text-[9px] md:text-xs font-bold tracking-[0.4em] uppercase text-[#F2B800]">
+          <span className="text-[12px] md:text-xs font-bold tracking-[0.4em] uppercase text-[#ffffff]">
             Digital Transformation Studio
           </span>
           <div className="w-8 h-[1px] bg-[#F2B800]" />

@@ -2,115 +2,176 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-export default function AboutSection() {
-  const brandYellow = "#F2B800";
-
+// ================= UNDERLINE TO FULL ANIMATED BUTTON =================
+const MorphingButton = ({
+  text = "About Our Agency",
+  href = "/about",
+}: {
+  text?: string;
+  href?: string;
+}) => {
   return (
-    <section className="bg-white py-16 md:py-24 px-6 overflow-hidden border-t border-gray-100">
-      <div className="max-w-[1400px] mx-auto">
-        {/* --- TOP STATUS INDICATOR: Centered on mobile --- */}
-        <div className="flex items-center justify-center md:justify-start gap-3 mb-16 md:mb-24">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2B800] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F2B800]"></span>
-          </span>
-          <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-gray-400 text-center">
-            Based in the Digital Ether — Scaling Globally
-          </span>
-        </div>
+    <Link href={href} className="inline-block p-1">
+      <motion.div
+        initial="rest"
+        whileHover="hover"
+        whileTap={{ scale: 0.98 }}
+        animate="rest"
+        className="relative inline-flex items-center gap-3 px-6 py-3 cursor-pointer overflow-hidden rounded-[6px]"
+      >
+        {/* 1. Full Animated Background: Rises up from the underline on hover */}
+        <motion.div
+          variants={{
+            rest: { scaleY: 0, opacity: 0 },
+            hover: { scaleY: 1, opacity: 1 },
+          }}
+          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 bg-[#F2B800] origin-bottom rounded-[6px] -z-0"
+        />
 
-        {/* --- MAIN GRID --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-          {/* LEFT: MASSIVE HEADLINE: Centered on mobile */}
-          <div className="lg:col-span-7 flex flex-col items-center md:items-start">
+        {/* 2. Default Bottom Underline: Disappears as background fills */}
+        <motion.span
+          variants={{
+            rest: { scaleX: 1, opacity: 1 },
+            hover: { scaleX: 1, opacity: 0 },
+          }}
+          transition={{ duration: 0.2 }}
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-neutral-900 origin-left"
+        />
+
+        {/* 3. Four Corner Brackets: Snap into focus on hover */}
+        <motion.span
+          variants={{
+            rest: { opacity: 0, scale: 0.6 },
+            hover: { opacity: 1, scale: 1 },
+          }}
+          transition={{ duration: 0.25 }}
+          className="absolute -top-[2px] -left-[2px] w-2 h-2 border-t-[1.5px] border-l-[1.5px] border-neutral-950 pointer-events-none"
+        />
+        <motion.span
+          variants={{
+            rest: { opacity: 0, scale: 0.6 },
+            hover: { opacity: 1, scale: 1 },
+          }}
+          transition={{ duration: 0.25 }}
+          className="absolute -top-[2px] -right-[2px] w-2 h-2 border-t-[1.5px] border-r-[1.5px] border-neutral-950 pointer-events-none"
+        />
+        <motion.span
+          variants={{
+            rest: { opacity: 0, scale: 0.6 },
+            hover: { opacity: 1, scale: 1 },
+          }}
+          transition={{ duration: 0.25 }}
+          className="absolute -bottom-[2px] -left-[2px] w-2 h-2 border-b-[1.5px] border-l-[1.5px] border-neutral-950 pointer-events-none"
+        />
+        <motion.span
+          variants={{
+            rest: { opacity: 0, scale: 0.6 },
+            hover: { opacity: 1, scale: 1 },
+          }}
+          transition={{ duration: 0.25 }}
+          className="absolute -bottom-[2px] -right-[2px] w-2 h-2 border-b-[1.5px] border-r-[1.5px] border-neutral-950 pointer-events-none"
+        />
+
+        {/* 4. Text & Animated Arrow */}
+        <span className="relative z-10 text-[13px] md:text-[14px] font-bold tracking-tight text-neutral-950 uppercase">
+          {text}
+        </span>
+        <ArrowUpRight
+          size={17}
+          strokeWidth={2.2}
+          className="relative z-10 text-neutral-950 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        />
+      </motion.div>
+    </Link>
+  );
+};
+
+export default function AboutSection() {
+  return (
+    <section className="bg-white py-16 md:py-24 px-6 border-t border-neutral-100 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          
+          {/* ================= LEFT SIDE (DESKTOP): TAGLINE + HEADING + MORPHING BUTTON ================= */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            {/* Tagline */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F2B800]" />
+              <span className="text-[10px] md:text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-neutral-500">
+                Performance Digital Marketing Agency
+              </span>
+            </div>
+
+            {/* Headline */}
             <motion.h2
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[32px] md:text-[56px] lg:text-[84px] font-bold tracking-tighter text-black leading-[1.1] text-center md:text-left"
+              transition={{ duration: 0.6 }}
+              className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-neutral-950 leading-[1.02]"
             >
-              Small team.
+              Driving Growth.
               <br />
-              <span className="text-gray-300">Big digital </span>
+              <span className="text-neutral-300">Scaling Brands With </span>
               <br />
-              <span className="italic font-light">thinking.</span>
+              <span
+                style={{ fontFamily: "'TheSeasonsItalic', serif" }}
+                className="normal-case text-[#F2B800] tracking-normal font-normal pl-1 inline-block"
+              >
+                Precision.
+              </span>
             </motion.h2>
+
+            {/* Desktop Button: Left side below heading */}
+            <div className="hidden lg:block pt-8">
+              <MorphingButton text="About Our Agency" href="/about" />
+            </div>
           </div>
 
-          {/* RIGHT: NARRATIVE CONTENT: Centered on mobile */}
-          <div className="lg:col-span-5 pt-4 md:pt-10 flex flex-col items-center md:items-start">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          {/* ================= RIGHT SIDE (DESKTOP) / MIDDLE CONTENT (MOBILE) ================= */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+            {/* Short Digital Marketing Narrative */}
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8 md:space-y-10 flex flex-col items-center md:items-start text-center md:text-left"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-base md:text-lg text-neutral-900 font-medium leading-relaxed max-w-lg lg:max-w-none"
             >
-              <p className="text-[18px] md:text-[26px] text-gray-800 leading-snug font-medium max-w-md md:max-w-none">
-                SkyNovaDigitals brings together design, technology and marketing
-                to help ambitious brands build better digital experiences.
-              </p>
+              Sky Nova Digitals is a full-service growth agency. We combine data-backed{" "}
+              <strong className="text-neutral-950 font-bold">SEO</strong>, high-ROI{" "}
+              <strong className="text-neutral-950 font-bold">Paid Advertising</strong>, and{" "}
+              <strong className="text-neutral-950 font-bold">Conversion Rate Optimization</strong>{" "}
+              to turn qualified traffic into consistent revenue.
+            </motion.p>
 
-              <div className="space-y-6 flex flex-col items-center md:items-start">
-                <p className="text-gray-500 text-[15px] md:text-[18px] leading-relaxed max-w-sm md:max-w-md">
-                  We combine strategic thinking with hands-on execution—giving
-                  businesses the quality of a premium studio without the
-                  unnecessary complexity of a large agency.
-                </p>
-
-                {/* BRAND PILL TAGS: Centered on mobile */}
-                <div className="flex flex-wrap gap-2 md:gap-3 justify-center md:justify-start">
-                  {["Strategy", "Design", "Code"].map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-4 py-1.5 border border-black/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-50/50"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+            {/* 3 Core Growth Pillars */}
+            <div className="space-y-3 pt-4 border-t border-neutral-100 w-full max-w-lg lg:max-w-none">
+              <div className="flex flex-col sm:flex-row items-center justify-between text-[16px] font-mono py-1.5 gap-1 border-b border-neutral-100/60 sm:border-0">
+                <span className="font-bold text-neutral-900">01 / ORGANIC SEARCH</span>
+                <span className="text-neutral-500">Technical SEO & Content Strategy</span>
               </div>
-
-              {/* REFINED CTA: Centered on mobile */}
-              <div className="pt-6 md:pt-8 w-full flex justify-center md:justify-start">
-                <Link
-                  href="/about"
-                  className="group inline-flex items-center gap-5 md:gap-6 text-left"
-                >
-                  <div className="relative shrink-0">
-                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black transition-all duration-500">
-                      <ArrowRight className="text-black group-hover:text-white transition-colors duration-500 w-5 h-5 md:w-6 md:h-6" />
-                    </div>
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 15,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                      className="absolute inset-[-8px] md:inset-[-10px] border border-dashed border-black/5 rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F2B800] mb-0.5">
-                      Get to know us
-                    </span>
-                    <span className="text-lg md:text-xl font-bold text-black border-b border-black/10 pb-1 group-hover:border-[#F2B800] transition-all">
-                      More About Us
-                    </span>
-                  </div>
-                </Link>
+              <div className="flex flex-col sm:flex-row items-center justify-between text-[16px] font-mono py-1.5 gap-1 border-b border-neutral-100/60 sm:border-0">
+                <span className="font-bold text-neutral-900">02 / PAID ACQUISITION</span>
+                <span className="text-neutral-500">Google & Meta Performance Ads</span>
               </div>
-            </motion.div>
+              <div className="flex flex-col sm:flex-row items-center justify-between text-[16px] font-mono py-1.5 gap-1">
+                <span className="font-bold text-neutral-900">03 / CONVERSION FUNNELS</span>
+                <span className="text-neutral-500">CRO & High-Converting Pages</span>
+              </div>
+            </div>
+
+            {/* Mobile Button: Bottom after content */}
+            <div className="flex lg:hidden justify-center pt-6 w-full">
+              <MorphingButton text="About Our Agency" href="/about" />
+            </div>
           </div>
-        </div>
 
-        {/* --- BOTTOM DECOR LINE --- */}
-        <div className="mt-24 md:mt-32 w-full h-[1px] bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+        </div>
       </div>
     </section>
   );
