@@ -182,26 +182,29 @@ export default function Footer() {
       {/* ================= 2. BACKGROUND WATERMARK TYPOGRAPHY ================= */}
       <div className="absolute bottom-[-2vw] left-1/2 -translate-x-1/2 pointer-events-none opacity-[0.025] select-none whitespace-nowrap z-0">
         <h2 className="text-[22vw] font-black uppercase tracking-tighter text-white">
-          SkyNova
+          Sky Nova
         </h2>
       </div>
 
       {/* ================= 3. MAIN FOOTER CONTENT ================= */}
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20 md:mb-24">
-          {/* Brand Column with Your Exact Logo Restored */}
+          {/* Brand Column */}
           <div className="lg:col-span-6 flex flex-col items-center text-center md:items-start md:text-left">
             <Link
               href="/"
               className="inline-flex items-center gap-3 mb-6 group"
             >
               <img
-                src="/logo/LOGO.png"
+                src="/logo/SND-newlogo.png"
                 alt="SkyNova Logo"
                 className="h-7 md:h-8 w-auto object-contain"
               />
-              <span className="text-xl font-black tracking-tight text-white uppercase">
-                SkyNova<span className="text-[#F2B800]">Digitals</span>
+              {/* Sky (Yellow) Nova (Orange) Digitals (Yellow) */}
+              <span className="text-xl font-medium tracking-tight uppercase">
+                <span className="text-[#F2B800]">Sky</span>{" "}
+                <span className="text-[#FF6B00]">Nova</span>{" "}
+                <span className="text-[#F2B800]">Digitals</span>
               </span>
             </Link>
 
@@ -311,7 +314,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col items-center md:items-end space-y-3">
-            <div className="flex gap-6 text-[12px]  font-medium uppercase text-neutral-400">
+            <div className="flex gap-6 text-[12px] font-medium uppercase text-neutral-400">
               <Link
                 href="/privacy"
                 className="hover:text-white transition-colors"
@@ -328,7 +331,7 @@ export default function Footer() {
             </div>
 
             <p className="text-[12px] font-mono text-neutral-500 uppercase tracking-widest leading-relaxed">
-              © {2025} SkyNova Digitals. Crafted for the Modern Web.
+              © {currentYear} Sky Nova Digitals. Crafted for the Modern Web.
             </p>
           </div>
         </div>

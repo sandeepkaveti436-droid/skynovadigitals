@@ -169,7 +169,7 @@ export default function Navbar() {
               <motion.img
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                src="/logo/LOGO.png"
+                src="/logo/SND-newlogo.png"
                 alt="Sky Nova Digitals Logo"
                 className="h-8 md:h-9 w-auto"
               />
@@ -260,7 +260,7 @@ export default function Navbar() {
                   className="flex items-center"
                 >
                   <img
-                    src="/logo/LOGO.png"
+                    src="/logo/SND-newlogo.png"
                     alt="Sky Nova Digitals Logo"
                     className="h-8 w-auto"
                   />
